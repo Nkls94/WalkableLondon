@@ -13,4 +13,3 @@ For the data colection we applied a Google Street View audit tool on every stree
 
 The dataset can be used to raise awareness of the everyday life of pedestrians, as well as to formulate policy, with a view to implementing urban mobility strategies. At the same time, the progress of urban sustainability can also be monitored. While assisting policy-makers, to use urban planning strategies, and monitor progress in urban sustainability.
 
-It is recommended, before using the webgis, to a have a look in the About tab-section.
