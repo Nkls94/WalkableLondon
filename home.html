@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>Walkable London - Home</title>
+    
+    
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.3.0/mapbox-gl.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="src/leaflet.css">
+    <link rel="stylesheet" href="src/plugins/jquery-ui.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script src="src/leaflet-src.js"></script>
+    <script src="src/jquery-3.5.1.min.js"></script>
+    <script src="src/plugins/leaflet-providers.js"></script>
+    <script src="src/plugins/leaflet.ajax.min.js"></script>
+    <script src="src/plugins/jquery-ui.min.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.3.0/mapbox-gl.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    
+
+<style>
+            * {
+          -moz-box-sizing: border-box;
+               box-sizing: border-box;
+          margin: 0;
+        }
+        *{
+          font-family: Rajdhani,sans-serif;
+        }
+        html, body {
+          height: 100%;
+          background-color: #9dafb0;
+          
+        }
+        /* The navbar */
+        .topnav {
+          overflow: hidden;
+          background-color: #333;
+/*
+          position: sticky;
+          top: 0;
+*/
+
+        }
+
+        /* Navbar links */
+        .topnav a {
+          float: left;
+          color: #f2f2f2;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+          font-size: 17px;
+        }
+
+        .topnav a.hover {
+    /*      background-color: #ddd;*/
+          color: black;
+        }
+
+        .topnav a.active {
+          background-color: #125177;
+          color: white;
+        }    
+        
+
+        .topnav-center{
+            float: right;
+            text-align: center;
+        }
+    
+        a:link{
+        text-decoration: none;
+        }
+
+        a:visited{
+            text-decoration: none;
+        }
+    
+        .container {
+           margin:0 auto; /* this will center the page */
+           width:100%;
+            height: 100%;/*  use your width here */
+            background-color: #9dafb0;
+        }
+        .container1 {
+           margin:0 auto; /* this will center the page */
+           width:100%; /*  use your width here */
+            height: 100%;
+            background-color: #9dafb0;
+        }
+        .desc{
+            position: center;
+            margin: auto;
+            padding: 16px;
+            top: 10%;
+            text-align: left;
+            color: white;
+            background-color: #333;
+            height: 75%;
+            box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1px 3px 0 rgb(0 0 0 / 12%);
+
+        }
+        .main{
+            text-align: center;
+        }
+    
+        #one:hover{
+            color: #295253;
+        }
+    
+        a:hover{
+            color:#63b7a2
+        }
+        
+    .animate{
+	transform: scale(1);
+	animation: pulse 2s infinite;
+
+    }
+    @keyframes pulse {
+	0% {
+		transform: scale(0.95);
+		text-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+	}
+
+	70% {
+		transform: scale(1);
+		text-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		text-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
+}
+        .parallax {
+          /* The image used */
+          background-image: url("img/london_mapbox1.PNG");
+
+          /* Set a specific height */
+          height: 100%;
+
+          /* Create the parallax scrolling effect */
+          background-attachment: fixed;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+
+        }
+        #myBtn {
+          display: none;
+          position: fixed;
+          bottom: 20px;
+          right: 30px;
+          z-index: 99;
+          font-size: 18px;
+          border: none;
+          outline: none;
+          background-color: #395f60;
+          color: white;
+          cursor: pointer;
+          padding: 15px;
+          border-radius: 4px;
+        }
+
+        #myBtn:hover {
+          background-color: #295253;
+        }
+        .footer{
+            display: block;
+            padding: 3px;
+            bottom: auto;
+        }
+</style>
+</head>
+<body>
+
+        <div class="topnav" >
+          <a class="active" href="./home.html">Walkable London</a>
+        
+          <div class="topnav-center"> 
+          <a href="./home.html"><i class="fa fa-home fa-fw" aria-hidden="true" rel="tooltip" title="Home" id='example'></i>&nbsp; Home</a> 
+          <a href="./index.html"><i class="fa fa-globe" aria-hidden="true" rel="tooltip" title="WebGIS" id='example'></i>&nbsp; WebGIS</a>
+          <a href="./about.html"><i class="fa fa-question-circle" aria-hidden="true" rel="tooltip" title="FAQ" id='example'></i>&nbsp; FAQ</a>
+<!--          <a href="#"><i class="fa fa-info" aria-hidden="true" rel="tooltip" title="Info " id='example'></i>&nbsp; Info</a>&nbsp;&nbsp;&nbsp;-->
+          </div>
+        </div>
+
+        
+        <div class="parallax"><div class="animate"style="width: 100%; position: absolute; bottom: 10px; margin: center; text-align: center; color: #125177;font-size: 40px; margin-bottom: 150px;text-shadow: {0px 1px white};"><b>Walkable London</b></div></div>
+        <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+        <div class='container'><br>
+          <div style="height: 50px"></div>
+           <div>
+            <div class="desc" style="height:500px;width:1200px; margin-top: 20px;margin-bottom: 20px;">  
+            <p style="font-size: 22px"><b>Description</b></p><br>
+                <p>For those who walk!</p>
+                <p>Designing cities more friendly to residents improves the attractiveness of public space, social interactions, and urban sustainability. However, the lack of microscale design data (such as pavements, crossings, etc.) has been a major obstacle to the creation of more integrated research programmes and spatial policies. The aim of the work is to create a comprehensive database of walkability, available for London in high spatial analysis, in such a way as to promote spatial research and spatial policy for better public spaces and quality of life in the city. With the development of urban analytics, the city will have a more pedestrian-friendly character.</p>
+                <p>The aim is to present the variables in such a way that there is an active policy, which will largely meet the needs of citizens. Essentially it is an application, which will promote decision making, and better spatial policies for the most quality of life in the city. </p>
+                <p>What is happening on this platform is a measure of walking with tools that give us a better insight into what is happening in every neighbourhood in London.</p>
+                <p>On this wavelength, this website, visualize the 17 pre-processed and microscale walkability variables and the assessment indexes, in the Westminster borough. The 19 wards , that the visualization is carried out are: Abbey Road, Bayswater, Bryanston and Borset Square, Church Street, Churchill, Harrow Road, Hyde Park, Knightsbridge and Begravia, Lancaster Gate, Little Venice, Maida Vale, Maylebone High Street, Queen's Park, Regent's Park, St. James, Tachbrook, Vincent Square, Warwick, West End and Westbourne. We follow a methodology in short which is presented until the final result which is the index of walking in high spatial resolution, of 50m x 50m pixels. At the same time, the diagrams and visualization performed are helpful for the user using it.</p>
+                <p>For the data colection we applied a Google Street View audit tool on every street and crossing segment, block by block, on both ides of each street. Digitizing in polyline features, for a total of 21.47 square meters. </p>
+                <p>The dataset can be used to raise awareness of the everyday life of pedestrians, as well as to formulate policy, with a view to implementing urban mobility strategies. At the same time, the progress of urban sustainability can also be monitored. While assisting policy-makers, to use urban planning strategies, and monitor progress in urban sustainability.</p>
+                <p>It is recommended, before using the webgis, to a have a look in the <a href="./about.html">About</a> tab-section.</p>
+            </div>
+            <div style="height: 50px"></div>
+            <div class="main" style="height:25%; width:1100px; margin:0 auto;">
+                <a href="./index.html"><i class="fa fa-globe fa-3x" style="color: #395f60" aria-hidden="true" rel="tooltip" title="WebGIS" id='example'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="./about.html" id="one"><i class="fa fa-question-circle fa-3x" style="color: #395f60" aria-hidden="true" rel="tooltip" title="FAQ" id='example'></i></a><br>
+              
+            </div>
+           </div>
+        </div>  
+        <div class="container1" style="height:100%;background-color:#333;color: white;">
+        <div style="height: 70px"></div>
+        <div style="width:1100px; padding: 18px; margin-left: 150px;">
+        <p style="font-size: 24px"><b>Know us better..</b></p><br><br>
+        <p style="font-size: 18px; padding: 18px;"><b>Nick Stasinos</b>, GIS and Website Visualization, NTUA</p>
+        <p style="font-size: 18px; padding: 18px;"><b>Yorgos N. Photis</b>, Director, Geography Lab, NTUA</p>
+        <p style="font-size: 18px; padding: 18px;"><b>Alex Bartzokas-Tsiompras</b>, Lead Researcher, NTUA</p>
+        <div style="height: 140px"></div>
+        <p>For more information,</p><br>
+        <p style="color: #63b7a2"><a href="mailto:geochoros@mail.ntua.gr">geochoros@mail.ntua.gr</a></p><br>
+        <div style="padding: 18px">
+         <a href="#"><span class="fa-stack fa-2x">
+          <i class="fa fa-square-o fa-stack-2x"></i>
+          <i class="fa fa-linkedin-square fa-stack-1x" ></i>
+        </span></a>&nbsp;&nbsp;
+        <a href="#"><span class="fa-stack fa-2x">
+          <i class="fa fa-square-o fa-stack-2x"></i>
+          <i class="fa fa-youtube-square fa-stack-1x"></i>
+        </span></a>&nbsp;&nbsp;
+        <a href="#" class=""><span class="fa-stack fa-2x">
+          <i class="fa fa-square-o fa-stack-2x"></i>
+          <i class="fa fa-github fa-stack-1x"></i>
+        </span></a>
+        </div>
+
+        <footer>
+            <p style="font-size: 15px">© Nick Stasinos, 2021. All rights reserved.</p>
+        </footer>
+        
+        </div>
+        </div>  
+</body>
+<script>
+    //Get the button:
+    mybutton = document.getElementById("myBtn");
+
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        mybutton.style.display = "block";
+      } else {
+        mybutton.style.display = "none";
+      }
+    }
+
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    }
+         
+</script>
+</html>

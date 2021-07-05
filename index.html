@@ -1,0 +1,3165 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">       
+        <title>Walkable London - webGIS</title>
+        <link rel="stylesheet" href="src/leaflet.css">
+        <link rel="stylesheet" href="src/css/bootstrap.css">
+        <link rel="stylesheet" href="src/plugins/L.Control.Pan.css">
+        <link rel="stylesheet" href="src/plugins/L.Control.Zoomslider.css">
+        <link rel="stylesheet" href="src/plugins/L.Control.MousePosition.css">
+<!--        <link rel="stylesheet" href="src/plugins/Leaflet.PolylineMeasure.css">-->
+        <link rel="stylesheet" href="src/plugins/easy-button.css">
+        <link rel="stylesheet" href="src/plugins/L.Control.Sidebar.css">
+        <link rel="stylesheet" href="src/plugins/leaflet-opencage/src/css/L.Control.OpenCageSearch.css">
+        <link rel="stylesheet" href="src/plugins/MarkerCluster.Default.css">
+        <link rel="stylesheet" href="src/plugins/MarkerCluster.css">
+        <link rel="stylesheet" href="src/plugins/jquery-ui.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+        <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
+        <link rel="stylesheet" href="src/leaflet.groupedlayercontrol.css">
+        
+        
+        <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+        <script src="src/leaflet-src.js"></script>
+        <script src="src/jquery-3.5.1.min.js"></script>
+        <script src="src/plugins/L.Control.Pan.js"></script>
+        <script src="src/plugins/L.Control.Zoomslider.js"></script>
+        <script src="src/plugins/L.Control.MousePosition.js"></script>
+<!--        <script src="src/plugins/Leaflet.PolylineMeasure.js"></script>-->
+        <script src="src/plugins/easy-button.js"></script>
+        <script src="src/plugins/L.Control.Sidebar.js"></script>
+        <script src="src/plugins/leaflet-opencage/src/js/L.Control.OpenCageSearch.js"></script>
+        <script src="src/plugins/leaflet-providers.js"></script>
+        <script src="src/plugins/leaflet.ajax.min.js"></script>
+        <script src="src/plugins/leaflet.markercluster.js"></script>
+        <script src="src/plugins/jquery-ui.min.js"></script>
+        <script src="src/plugins/leaflet.geometryutil.js"></script>
+        <script src='https://api.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script>
+        <script src="https://unpkg.com/leaflet.tilelayer.glcolorscale/dist/bundle.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="src/leaflet.groupedlayercontrol.js"></script>
+        <script src="src/StreetViewButtons.js"></script> 
+<!--        The togeojson.js library is required for the leaflet.filelayer plugin to work-->
+<!--        <script src="src/plugins/togeojson.js"></script>-->
+        <script src="https://unpkg.com/togeojson@0.14.2"></script>
+        <script src="src/plugins/leaflet.filelayer.js"></script> 
+        <script src="src/plugins/FileSaver.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js" integrity="sha512-zO8oeHCxetPn1Hd9PdDleg5Tw1bAaP0YmNvPY8CwcRyUk7d7/+nyElmFrB6f7vg4f7Fv4sui1mcep8RIEShczg==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js" integrity="sha512-SuxO9djzjML6b9w9/I07IWnLnQhgyYVSpHZx0JV97kGBfTIsUYlWflyuW4ypnvhBrslz1yJ3R+S14fdCWmSmSA==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js" integrity="sha512-hZf9Qhp3rlDJBvAKvmiG+goaaKRZA6LKUO35oK6EsM0/kjPK32Yw7URqrq3Q+Nvbbt8Usss+IekL7CRn83dYmw==" crossorigin="anonymous"></script>       
+        
+            <style>
+                body{
+                    height: 100%;
+                    margin: 0;
+                    font-family: Rajdhani,sans-serif;
+                }
+                
+                .topnav {
+                  overflow: hidden;
+                  background-color: #333;
+                }
+
+                .topnav a {
+                  float: left;
+                  display: block;
+                  color: #f2f2f2;
+                  text-align: center;
+                  padding: 14px 16px;
+                  text-decoration: none;
+                  font-size: 17px;
+                }
+
+                .active {
+                  background-color: #125177;
+                  color: white;
+                }
+                a:link{
+                text-decoration: none;
+                }
+
+                a:visited{
+                    text-decoration: none;
+                }
+
+                .topnav .icon {
+                  display: none;
+                }
+                
+                .topnav-right{
+                    float: right;
+                }
+
+                .dropdown {
+                  float: left;
+                  overflow: hidden;
+                }
+
+                .dropdown .dropbtn {
+                  font-size: 17px;    
+                  border: none;
+                  outline: none;
+                  color: white;
+                  padding: 14px 16px;
+                  background-color: inherit;
+                  font-family: inherit;
+                  margin: 0;
+                }
+
+                .dropdown-content {
+                  display: none;
+                  position: absolute;
+                  background-color: #f9f9f9;
+                  min-width: 160px;
+                  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                  z-index: 1;
+                }
+
+                .dropdown-content a {
+                  float: none;
+                  color: black;
+                  padding: 12px 16px;
+                  text-decoration: none;
+                  display: block;
+                  text-align: left;
+                }
+
+                .topnav .dropdown:hover .dropbtn {
+                  background-color: #555;
+                  color: white;
+                }
+
+                .dropdown-content a:hover {
+                  background-color: #ddd;
+                  color: black;
+                }
+                a:hover{
+                    color:#63b7a2
+                }
+                .dropdown:hover .dropdown-content {
+                  display: block;
+                }      
+                
+                #mapdiv {
+                    height:94.3vh;
+                    z-index: 0;
+
+
+                }
+
+                .col-xs-12, .col-xs-6, .col-xs-4 {
+                    padding: 3px;
+                }
+                
+                #side-bar {
+                    background-color: #474747;
+                    border-width: 1.45px;
+                    border-style: solid;
+                    color: whitesmoke;
+                }
+                #sidebar {
+                    background-color: #474747;
+                    border-width: 1.45px;
+                    border-style: solid;
+                    color: whitesmoke;
+
+                    
+                }                
+                #occ{
+                    background-color: #474747;
+                    width:380px;
+                }
+                #ocf{
+                    background-color: #474747;
+                    width:380px;
+                }
+                #oce{
+                    background-color: #474747;
+                    width:380px;
+                }
+                #selector {
+                    word-wrap: break-word;
+                }
+                #divProject {
+                    background-color: #474747;
+                }
+                divProjLabel{
+                    z-index: 100;
+                }
+                
+                #divWalk {
+                    background-color: beige;
+                }                
+
+                .errorMsg{
+                    padding:0;
+                    text-align:center;
+                    background-color: darksalmon;
+                }
+                
+                #btnFindProject{
+                    background-color: cadetblue;
+                }
+                #PedEnvScore{
+                    background-color: cadetblue;
+                }
+                #PedInfrScore{
+                    background-color: cadetblue;
+                }
+                #WalkabilityScore{
+                    background-color: cadetblue;
+                }
+                #MEANWalkabilityScore{
+                    background-color: #b6d2d3;
+                }
+                #MEANPedInfrScore{
+                    background-color: #b6d2d3;
+                }
+                #WalkabilityFinalScore{
+                    background-color: cadetblue;
+
+                }
+                
+                #varia{
+                    background-color: cadetblue;
+                }
+                
+                #btnGrid{
+                    background-color: cadetblue;
+                }
+                
+                #btnCalc{
+                    background-color: cadetblue;
+                }
+                #autocomplete {
+                    background-color: #fafaeb;
+                    z-index: 100;
+                    margin-bottom: 5px;
+                }
+                #myDIV{
+                    height: 100px;
+                }
+                
+               
+                #SelectTr, #SelectSf, #SelectSocial, #SelectSide, #SelectRoad, #SelectCr{
+                    background: 0x474747;
+                }
+                
+                .info {
+                    padding: 6px 8px;
+                    font: 14px/16px Arial, Helvetica, sans-serif;
+                    background: white;
+                    background: rgba(255,255,255,0.8);
+                    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+                    border-radius: 5px;
+                }
+                .info h4 {
+                    margin: 0 0 5px;
+                    color: #777;
+                }
+/*
+                #chart{
+                    height: 50vh;
+                }
+*/
+
+            </style>
+ 
+    </head>
+    <body>
+        <div class="topnav" >
+          <a class="active" href="./home.html">Walkable London</a>
+        
+          <div class="topnav-right"> 
+          <a href="./home.html"><i class="fa fa-home fa-fw" aria-hidden="true" rel="tooltip" title="Home" id='example'></i>&nbsp; Home</a> 
+          <a href="./index.html"><i class="fa fa-globe" aria-hidden="true" rel="tooltip" title="WebGIS" id='example'></i>&nbsp; WebGIS</a>
+          <a href="./about.html"><i class="fa fa-question-circle" aria-hidden="true" rel="tooltip" title="FAQ " id='example'></i>&nbsp; FAQ</a>
+<!--          <a href="#"><i class="fa fa-info" aria-hidden="true" rel="tooltip" title="Info " id='example'></i>&nbsp; Info</a>&nbsp;&nbsp;&nbsp;-->
+          </div>
+        </div> 
+        <div id="side-bar" class='col-xs-12'>
+            <div id="WEB" class='text-center col-xs-12'><h1><b>Maps</b></h1></div>
+            <br>
+            
+            <div class="text-center col-xs-12"><hr><b>Variables Maps:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="bi bi-info-square" rel="tooltip" title="You can refer to the FAQ tab for further information" id='example'></i></div><br> 
+            
+<!--------------------------------------------------------------- VARIABLES ------------------------------------------------------------------------------------------------>       
+           <div id="button">
+            <button id="varia" class="btn btn-outline-light btn-block">Variable Categories</button>
+           </div><br>
+            
+		   <div id="select">
+		   
+		   	   <div id="divProject" class="col-xs-12" >
+               <div class="text-center col-xs-12"><b>Ward Finder:</b>
+               </div>
+               <br>
+               </div>	   
+<!--                                       Land                         -->
+                <div id="button1">
+                <button id="walk_score" class="btn btn-outline-secondary btn-block" style="color:whitesmoke">Land Uses</button>
+                </div>
+                
+                <div id="select1"><br>
+                <label for="o">Land Use Category:</label><br>
+                 <div id="select1">
+                  <select class="form-control" id="one" onchange='S1()'>
+                       <option value="All">Land Use Category</option>
+                       <option value="0">Main Residence/No Use/Industry/Small business</option>
+                       <option value="1">Mainly Active Uses/Activities (e.g. Commerce, Entertainment, Services)</option>
+                       <option value="Null">No Data</option>
+                   </select><br>
+                 <label for="sldS1_1" class="form-label">Mainly Active Uses/Activities</label>&nbsp;&nbsp;&nbsp;<input type="checkbox" id="lyrS1_1" class="check" checked><br>
+                <input type="range" class="form-range" id="sldS1_1" min="0" max="1" step="0.01" value="0.0"><br><br><br>
+                  <label for="o">Number of park/square accesses:</label><br>
+                  <select class="form-control" id="two" onchange='S2()'>
+                       <option value="All">Number of park/square accesses</option>
+                       <option value="0">None</option>
+                       <option value="1">Only one access</option>
+                       <option value="2">Two or more accesses</option>
+                       <option value="Null">No Data</option>
+                  </select> 
+                   <br><br>
+                <label for="sldS2_1" class="form-label">One or more accesses</label>&nbsp;&nbsp;&nbsp;<input type="checkbox" id="lyrS2_1" class="check" checked><br>
+                <input type="range" class="form-range" id="sldS2_1" min="0" max="1" step="0.01" value="0.0"><hr>
+                  </div>
+                  
+                </div>
+ <!--                                       Transportation                         -->               
+                <div id="button3">
+                <button id="walk_score" class="btn btn-outline-secondary btn-block" style="color:whitesmoke">Mobility Choices</button>
+                </div> 
+                <div id="select3"><br>
+                <label for="o">Number of Stops/Mass Transit Stations:</label><br>
+                  <select class="form-control" id="three" onchange='S3()'>
+                       <option value="All">Number of Stops/Mass Transit Stations</option>
+                       <option value="0">None</option>
+                       <option value="1">Only one stop/station</option>
+                       <option value="2">Two or more stops/stasions</option>
+                       <option value="Null">No Data</option>
+                  </select> 
+                   <br><br>
+                <label for="sldS3_1" class="form-label">One or more stops/stasions</label>&nbsp;&nbsp;&nbsp;<input type="checkbox" id="lyrS3_1" class="check" checked><br>
+                <input type="range" class="form-range" id="sldS3_1" min="0" max="1" step="0.1" value="0.0"><br><br><br>
+                <label for="o">Bicycle lane:</label><br>
+                  <select class="form-control" id="eight" onchange='S8()'>
+                       <option value="All">Bicycle lane</option>
+                       <option value="0">None</option>
+                       <option value="1">Bicycle lane without divider</option>
+                       <option value="2">Bicycle lane separated from traffic lane</option>
+                       <option value="Null">No Data</option>
+                   </select> 
+                   <br><br>
+                <label for="sldS8_1" class="form-label">Bicycle lane</label>&nbsp;&nbsp;&nbsp;<input type="checkbox" id="lyrS8_1" class="check" checked><br>
+                <input type="range" class="form-range" id="sldS8_1" min="0" max="1" step="0.01" value="0.0"><hr>  
+                </div>
+ <!--                                       Street Furniture                         -->               
+                <div id="button4">
+                <button id="walk_score" class="btn btn-outline-secondary btn-block" style="color:whitesmoke">Street Furniture</button>
+                </div>
+                <div id="select4"><br>
+                <label for="o">Public seated spots:</label><br>
+                  <select class="form-control" id="four" onchange='S4()'>
+                       <option value="All">Public seated spots (e.g. benches, chairs, etc.)</option>
+                       <option value="0">None</option>
+                       <option value="1">At least one seated spot</option>
+                       <option value="Null">No Data</option>
+                  </select> 
+                   <br><br>
+                <label for="sldS4_1" class="form-label">At least one seated spot</label>&nbsp;&nbsp;&nbsp;<input type="checkbox" id="lyrS4_1" class="check" checked><br>
+                <input type="range" class="form-range" id="sldS4_1" min="0" max="1" step="0.01" value="0.0"><br><br><br>
+                <label for="o">Public street lights:</label><br>
+                  <select class="form-control" id="five" onchange='S5()'>
+                       <option value="All">Public street lights</option>
+                       <option value="0">None</option>
+                       <option value="1">At least one</option>
+                       <option value="2">Intense lighting (two or more street light)</option>
+                       <option value="Null">No Data</option></select> 
+                   <br><br>
+                <label for="sldS5_0" class="form-label">There is no public street lights</label>&nbsp;&nbsp;&nbsp;<input type="checkbox" id="lyrS5_0" class="check" checked><br>
+                <input type="range" class="form-range" id="sldS5_0" min="0" max="1" step="0.01" value="0.0"><hr>  
+                </div>
+ <!--                                       Social                         -->                
+                <div id="button6">
+                <button id="walk_score" class="btn btn-outline-secondary btn-block" style="color:whitesmoke">Social Environment</button>
+                </div>
+                <div id="select6"><br>
+                <label for="o">Level of maintenance of buildings:</label><br>
+                  <select class="form-control" id="six" onchange='S6()'>
+                       <option value="All">Level of maintenance of buildings</option>
+                       <option value="0">Bad condition</option>
+                       <option value="1">Good condition</option>
+                       <option value="Null">No Data</option>
+                   </select> 
+                   <br><br>
+                <label for="sldS6_0" class="form-label">Buildings in bad condition</label>&nbsp;&nbsp;&nbsp;<input type="checkbox" id="lyrS6_0" class="check" checked><br>
+                <input type="range" class="form-range" id="sldS6_0" min="0" max="1" step="0.01" value="0.0"><br><br><br>
+                <label for="o">Vandalism of buildings faces with graffiti:</label><br>
+                  <select class="form-control" id="seven" onchange='S7()'>
+                       <option value="All">Vandalism of buildings faces with graffiti (Note: Artistic Murals do not taken into account as graffiti)</option>
+                       <option value="0">Graffiti</option>
+                       <option value="1">No graffiti</option>
+                       <option value="Null">No Data</option>
+                   </select> 
+                   <br><br>
+                <label for="sldS7_0" class="form-label">Vandalism of buildings faces with graffiti</label>&nbsp;&nbsp;&nbsp;<input type="checkbox" id="lyrS7_0" class="check" checked><br>
+                <input type="range" class="form-range" id="sldS7_0" min="0" max="1" step="0.01" value="0.0"><hr> 
+                </div>
+<!--                                       Pavement                         -->               
+                <div id="button9">
+                <button id="walk_score" class="btn btn-outline-secondary btn-block" style="color:whitesmoke">Sidewalks</button>
+                </div>
+                <div id="select9"><br>
+                <label for="o">Existence of sidewalk:</label><br>
+                  <select class="form-control" id="nine" onchange='S9()'>
+                       <option value="All">Existence of sidewalk</option>
+                       <option value="0">None</option>
+                       <option value="1">There is a sidewalk</option>
+                       <option value="Null">No Data</option>
+                  </select> 
+                   <br><br>
+                <label for="sldS9_0" class="form-label">There is no sidewalk</label>&nbsp;&nbsp;&nbsp;<input type="checkbox" id="lyrS9_0" class="check" checked><br>
+                <input type="range" class="form-range" id="sldS9_0" min="0" max="1" step="0.01" value="0.0"><br><br><br>
+                <label for="o">Level sidewalk maintenance:</label><br>
+                  <select class="form-control" id="ten" onchange='S10()'>
+                       <option value="All">Level sidewalk maintenance</option>
+                       <option value="0">Problematic sidewalk</option>
+                       <option value="1">Maintained sidewalk</option>
+                       <option value="Null">No Data</option>
+                  </select> 
+                   <br><br>
+                <label for="sldS10_1" class="form-label">Maintained sidewalk</label>&nbsp;&nbsp;&nbsp;<input type="checkbox" id="lyrS10_1" class="check" checked><br>
+                <input type="range" class="form-range" id="sldS10_1" min="0" max="1" step="0.01" value="0.0"><br><br><br>
+                <label for="o">Sidewalk separation:</label><br>
+                  <select class="form-control" id="eleven" onchange='S11()'>
+                       <option value="All">Sidewalk separation</option>
+                       <option value="0">No sidewalk separation</option>
+                       <option value="1">Sidewalk seperation</option>
+                       <option value="Null">No Data</option>
+                  </select> 
+                   <br><br>
+               <label for="o">Shading level/sidewalk cover:</label><br>
+                  <select class="form-control" id="twelve" onchange='S12()'>
+                       <option value="All">Shading level/sidewalk cover</option>
+                       <option value="0">No Cover or No Sidewalk</option>
+                       <option value="1">26-75%</option>
+                       <option value="2">76-100%</option>
+                       <option value="Null">No Data</option>
+                  </select> 
+               <br><br>
+                <label for="sldS12_1" class="form-label">Sidewalk cover</label>&nbsp;&nbsp;&nbsp;<input type="checkbox" id="lyrS12_1" class="check" checked><br>
+                <input type="range" class="form-range" id="sldS12_1" min="0" max="1" step="0.01" value="0.0"><br><br><br>
+
+                <label for="o">Sidewalk width:</label><br>
+                  <select class="form-control" id="thirteen" onchange='S13()'>
+                       <option value="All">Sidewalk width</option>
+                       <option value="0">Normal width or small/without sidewalk</option>
+                       <option value="1">Wide sidewalk</option>
+                       <option value="Null">No Data</option>
+                   </select> 
+                   <br><br>
+                <label for="sldS13_1" class="form-label">Wide sidewalk</label>&nbsp;&nbsp;&nbsp;<input type="checkbox" id="lyrS13_1" class="check" checked><br>
+                <input type="range" class="form-range" id="sldS13_1" min="0" max="1" step="0.01" value="0.0"><hr>  
+                </div> 
+<!--                                       Road Environment                         -->              
+                <div id="button14">
+                <button id="walk_score" class="btn btn-outline-secondary btn-block" style="color:whitesmoke">Road Environment</button>
+                </div>
+                <div id="select14"><br>
+                <label for="o">Car lanes:</label><br>
+                  <select class="form-control" id="fourteen" onchange='S14()'>
+                       <option value="All">Car lanes</option>
+                       <option value="0">More than four(4) lanes</option>
+                       <option value="1">Two(2) to three(3) lanes</option>
+                       <option value="2">One(1) lane or pedestrian area</option>
+                       <option value="Null">No Data</option>
+                   </select> 
+                   <br><br>
+                   <label for="sldpedisnotnull" class="form-label">Pedestrian walk signal:</label>&nbsp;&nbsp;&nbsp;<input type="checkbox" id="lyrpedisnotnull" class="check" checked><br>
+                <input type="range" class="form-range" id="sldC1_1_1" min="0" max="1" step="0.01" value="0.0"><hr>  
+                </div>
+ <!--                                       Crossings                         -->                 
+                <div id="button15">
+                <button id="walk_score" class="btn btn-outline-secondary btn-block" style="color:whitesmoke">Crossings</button>
+                </div>
+                <div id="select15"><br>
+                <label for="o">Pedestrian Walk Signal:</label><br>
+                  <select class="form-control" id="one_one" onchange='C1_1()'>
+                       <option value="All">Pedestrian Walk Signal</option>
+                       <option value="0">No pedestrian walk signal</option>
+                       <option value="1">There is a pedestrian walk signal</option>
+                       <option value="Null">No Data</option>
+                  </select> 
+                   <br><br>
+                <label for="sldC1_1_1" class="form-label">Pedestrian walk signal:</label>&nbsp;&nbsp;&nbsp;<input type="checkbox" id="lyrC1_1_1" class="check" checked><br>
+                <input type="range" class="form-range" id="sldC1_1_1" min="0" max="1" step="0.01" value="0.0"><hr>
+                 <label for="o">Curb ramp(s):</label><br>
+                  <select class="form-control" id="one_two" onchange='C1_2()'>
+                       <option value="All">Curb ramp(s)</option>
+                       <option value="0">No curb ramps available</option>
+                       <option value="1">There is at one curb only</option>
+                       <option value="2">There are at both pre- and post- crossing curbs</option>
+                       <option value="Null">No Data</option>
+                  </select> 
+                   <br><br>
+                <label for="sldC1_2_1" class="form-label">Both pre- and post- crossing curbs:</label>&nbsp;&nbsp;&nbsp;<input type="checkbox" id="lyrC1_2_1" class="check" checked><br>
+                <input type="range" class="form-range" id="sldC1_2_1" min="0" max="1" step="0.01" value="0.0"><hr>
+                 <label for="o">Pedestrian Crosswalk:</label><br>
+                  <select class="form-control" id="one_three" onchange='C1_3()'>
+                       <option value="All">Pedestrian Crosswalk</option>
+                       <option value="0">There is no pedestrian crosswalk</option>
+                       <option value="1">There is a pedestrian crosswalk</option>
+                       <option value="Null">No Data</option>
+                  </select> 
+                   <br><br>
+                <label for="sldC1_3_1" class="form-label">Pedestrian crosswalk:</label>&nbsp;&nbsp;&nbsp;<input type="checkbox" id="lyrC1_3_1" class="check" checked><br>
+                <input type="range" class="form-range" id="sldC1_3_1" min="0" max="1" step="0.01" value="0.0"><hr>
+                  
+                   <br><br>
+                   <hr>  
+                </div><br>
+                <input type="checkbox" id="lyrVarAll" class="check" checked> On/Off the Variables
+                <br />             
+            </div>
+            <div class="text-center col-xs-12"><hr><b>Assessment Maps:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="bi bi-info-square" rel="tooltip" title="You can refer to the FAQ tab for further information" id='example'></i></div><br>
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------          -->                   
+<!--  -------- ----------------------------MEANPedEnvScore  ------------------------------ ---------------------------------------------------------      --> 
+             <div id="PedEnvScore2">
+                <button id="PedEnvScore" class="btn btn-outline-light btn-block">Mean Pedestrian Environment Score</button>
+              </div>
+             <div id="PedEnvScore1"><br>
+             <i>Utilization rate calulcated as a mean value, for every block in a specific ward. The variables that are participate in this score are S5, C1_1, C1_2, C1_3 (For more, please refer to <a href="./about.html">FAQ</a>, calculated assessment question)</i><br><br>
+             <div>
+                   <b style="color: darkorange">Change the opacity of the score to continue</b><br>
+                   <input id="slide" type="range" min="0" max="1" step="0.25" value="0" onchange="updateOpacityMPES(this.value)">
+               </div><br>
+              
+              <b>Select the ward for this Score:</b>
+                   <select class="form-select" multiple aria-label="multiple select example" id="occ" onchange='PedEnvScore()'>
+                       <option value="All" selected>Westminster borough</option>
+                       <option value="Abbey Road">Abbey Road</option>
+                       <option value="Bayswater">Bayswater</option>
+                       <option value="Bryanston and Borset Square">Bryanston and Borset Square</option>
+                       <option value="Church Street">Church Street</option>
+                       <option value="Churchill">Churchill</option>
+                       <option value="Harrow Road">Harrow Road</option>
+                       <option value="Hyde Park">Hyde Park</option>
+                       <option value="Knightsbridge and Begravia">Knightsbridge and Begravia</option>
+                       <option value="Lancaster Gate">Lancaster Gate</option>
+                       <option value="Little Venice">Little Venice</option>
+                       <option value="Maida Vale">Maida Vale</option>
+                       <option value="Maylebone High Street">Maylebone High Street</option>
+                       <option value="Queens Park">Queen's Park</option>
+                       <option value="Regents Park">Regent's Park</option>
+                       <option value="St James">St. James</option>
+                       <option value="Tachbrook">Tachbrook</option>
+                       <option value="Vincent Square">Vincent Square</option>
+                       <option value="Warwick">Warwick</option>
+                       <option value="West End">West End</option>
+                       <option value="Westbourne">Westbourne</option>
+                   </select>
+                <br>
+                <h6><b>Value ratings:</b></h6>
+              <img src='http://localhost:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=10&HEIGHT=10&STRICT=false&style=MEAN_Ped_Env_Score_new&legend_options=fontName:Arial;fontAntiAliasing:true;fontColor:0xffffff;fontSize:6;bgColor:0x474747;dpi:200'><br>
+              <br>
+               <input type="checkbox" id="lyrMEANPedEnvScore" class="check" checked> On/Off Mean Pedestrian Environment Score
+                <br /> <hr>
+               </div>
+               <br>
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------          -->                   
+<!--  -------- ----------------------------MEANPedInfrScore  ------------------------------ ---------------------------------------------------------      -->     
+              <div id="PedInfr">
+                <button id="PedInfrScore" class="btn btn-outline-light btn-block" >Mean Pedestrian Infrastructure Score</button>
+              </div>
+             <div id="PedInfr1"><br>
+             <i>Utilization rate calulcated as a mean value, for every block in a specific ward. The variables that are participate in this score are S1, S2, S3, S6, S7, S8, S11, S12, S14 (For more, please refer to <a href="./about.html">FAQ</a>, calculated assessment question)</i><br><br>
+             <div>
+                   <b style="color: darkorange">Change the opacity of the score to continue</b><br>
+                   <input id="slide" type="range" min="0" max="1" step="0.25" value="0" onchange="updateOpacityMPIS(this.value)">
+               </div><br>
+              <b>Select the ward for this Score:</b>
+<!--                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="bi bi-info-square" rel="tooltip" title="Toggle the corresponding layer, from &quot;Spatial Indexes&quot;, on if needed" id='example'></i>-->
+                   <select class="form-select" multiple aria-label="multiple select example" id="ocf" onchange='PedInfrScore()'>
+                       <option value="All" selected>Westminster borough</option>
+                       <option value="Abbey Road">Abbey Road</option>
+                       <option value="Bayswater">Bayswater</option>
+                       <option value="Bryanston and Borset Square">Bryanston and Borset Square</option>
+                       <option value="Church Street">Church Street</option>
+                       <option value="Churchill">Churchill</option>
+                       <option value="Harrow Road">Harrow Road</option>
+                       <option value="Hyde Park">Hyde Park</option>
+                       <option value="Knightsbridge and Begravia">Knightsbridge and Begravia</option>
+                       <option value="Lancaster Gate">Lancaster Gate</option>
+                       <option value="Little Venice">Little Venice</option>
+                       <option value="Maida Vale">Maida Vale</option>
+                       <option value="Maylebone High Street">Maylebone High Street</option>
+                       <option value="Queens Park">Queen's Park</option>
+                       <option value="Regents Park">Regent's Park</option>
+                       <option value="St James">St. James</option>
+                       <option value="Tachbrook">Tachbrook</option>
+                       <option value="Vincent Square">Vincent Square</option>
+                       <option value="Warwick">Warwick</option>
+                       <option value="West End">West End</option>
+                       <option value="Westbourne">Westbourne</option>
+                   </select>
+                <br>
+                <h6><b>Value ratings:</b></h6>
+              <img src='http://localhost:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=10&HEIGHT=10&STRICT=false&style=MEAPedInfrScore_new&legend_options=fontName:Arial;fontAntiAliasing:true;fontColor:0xffffff;fontSize:6;bgColor:0x474747;dpi:200'><br>   
+              <br>
+                <input type="checkbox" id="lyrMEANPedInfrScore" class="check" checked> On/Off Mean Pedestrian Infrastructure Score
+                <br /> <hr>
+              </div>
+            <br> 
+<!-- -------------------------------------------------------------------------------------------------------------------------------   -------------          -->                   
+<!--  -------- ---------------------------- MEANWalkabilityScore ------------------------------ ---------------------------------------------------     -------         -->
+          
+            <div id="walk">
+                <button id="WalkabilityScore" class="btn btn-outline-light btn-block">MEAN Walkability Score</button>
+             </div> 
+             <div id="walk1"><br> <i>Utilization rate calulcated as a mean value, for every block in a specific ward. The variables that are participate in this score are all of them (For more, please refer to <a href="./about.html">FAQ</a>, calculated assessment question)</i><br><br>
+             <div>
+                   <b style="color: darkorange">Change the opacity of the score to continue</b><br>
+                   <input id="slide" type="range" min="0" max="1" step="0.25" value="0" onchange="updateOpacityMWS(this.value)">
+             </div><br>
+              <b>Select the ward for this Score:</b>
+                   <select class="form-select" multiple aria-label="multiple select example" id="oce" onchange='WalkabilityScore()'>
+                       <option value="All" selected>Westminster borough</option>
+                       <option value="Abbey Road">Abbey Road</option>
+                       <option value="Bayswater">Bayswater</option>
+                       <option value="Bryanston and Borset Square">Bryanston and Borset Square</option>
+                       <option value="Church Street">Church Street</option>
+                       <option value="Churchill">Churchill</option>
+                       <option value="Harrow Road">Harrow Road</option>
+                       <option value="Hyde Park">Hyde Park</option>
+                       <option value="Knightsbridge and Begravia">Knightsbridge and Begravia</option>
+                       <option value="Lancaster Gate">Lancaster Gate</option>
+                       <option value="Little Venice">Little Venice</option>
+                       <option value="Maida Vale">Maida Vale</option>
+                       <option value="Maylebone High Street">Maylebone High Street</option>
+                       <option value="Queens Park">Queen's Park</option>
+                       <option value="Regents Park">Regent's Park</option>
+                       <option value="St James">St. James</option>
+                       <option value="Tachbrook">Tachbrook</option>
+                       <option value="Vincent Square">Vincent Square</option>
+                       <option value="Warwick">Warwick</option>
+                       <option value="West End">West End</option>
+                       <option value="Westbourne">Westbourne</option>
+                   </select>
+                <br>
+                <h6><b>Value ratings:</b></h6>
+              <img src='http://localhost:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=10&HEIGHT=10&STRICT=false&style=MEANWalkabilityScore_new&legend_options=fontName:Arial;fontAntiAliasing:true;fontColor:0xffffff;fontSize:6;bgColor:0x474747;dpi:200'><br>
+              <br>                 
+               <input type="checkbox" id="lyrMEANWalkabilityScore" class="check" checked> On/Off MEAN Walkability Score
+                <br /> 
+            </div>
+          <br>
+<!--------------------------------------------------------------- Walkability Score ------------------------------------------------------------------------------------------------>
+          <div class="text-center col-xs-12"><hr><b>Walkability Score:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="bi bi-info-square" rel="tooltip" title="You can refer to the FAQ tab for further information" id='example'></i></div>
+          <div id="WalkFinal">
+             <button id="WalkabilityFinalScore" class="btn btn-outline-light btn-block">Walkability</button>
+          </div>
+           <div id="WalkFinalSele"><br> <i>Utilization rate calulcated as a walkability score, for the whole study area. The variables that are participate in this score are all of them (For more, please refer to <a href="./about.html">FAQ</a>, calculated assessment question)</i><br><br>
+            <input type="checkbox" id="walka" class="checkou" unchecked> On/Off the Walkability Score &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="checkbox" id="lyrWestwards" class="check" unchecked> On/Off the wards 
+           </div>
+            <br>
+ 
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------>             
+        </div>
+        <div id="sidebar" class='col-xs-12'>
+           <div id="WEB" class='text-center col-xs-12'><h1><b>Indicators</b></h1></div>
+           <br><br><br>
+           <div>
+            <div class="col-xs-12" style="margin-top: 45px" ><b>Graphs by Category:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="bi bi-info-square" rel="tooltip" title="You can refer to the FAQ tab for further information" id='example'></i></div><br><br><br>
+           </div><br><br>
+        <!--           land         -->
+          <div id="chart"><br>
+           <div id="btnland">
+            <button id="variables" class="btn btn-outline-secondary btn-block" style="color:whitesmoke">Land Uses</button>
+           </div>
+           <div id="btnselland" style="height: 44vh;">
+                <select class="form-control" multiple aria-label="multiple select example" id="SelectB" style="background-color: 0x474747;">
+                       <option value="74.1, 25.9, 90.3, 2.1, 7.6" selected>Westminster borough</option>
+                       <option value="95.45, 4.54, 100, 0, 0">Abbey Road</option>
+                       <option value="83.60, 16.39, 96.17, 3.82, 0">Bayswater</option>
+                       <option value="76.88, 23.11, 98.82, 0.94, 0.23">Bryanston and Borset Square</option>
+                       <option value="85.82, 0.40, 93.92, 0.40, 1.61">Church Street</option>
+                       <option value="42.45, 8.93, 42.45,1.67, 5.02">Churchill</option>
+                       <option value="80.95, 19.04, 94.55, 0.68, 4.76">Harrow Road</option>
+                       <option value="56.95, 43.04, 92.01, 2.83, 5.15">Hyde Park</option>
+                       <option value="95.28, 4.71, 63.06, 2.07, 34.86">Knightsbridge and Begravia</option>
+                       <option value="79.25, 20.74, 97.09, 1.24, 1.65">Lancaster Gate</option>
+                       <option value="81.13, 18.86, 97.48, 1.88, 0.62">Little Venice</option>
+                       <option value="97.96, 12.03, 85.18, 2.77, 12.03">Maida Vale</option>
+                       <option value="68.60,31.39, 97.17, 0.59, 2.23">Maylebone High Street</option>
+                       <option value="95.54, 4.45, 95.95, 3.23, 0.80">Queen's Park</option>
+                       <option value="89.53, 10.46, 82.42, 1.25, 16.31">Regent's Park</option>
+                       <option value="63.43, 36.56, 92.10,2.17, 5.72">St. James</option>
+                       <option value="60.29, 8.82, 63.23, 0.73, 5.14">Tachbrook</option>
+                       <option value="85.09, 12.72, 92.72, 0.72, 4.36">Vincent Square</option>
+                       <option value="74.91, 17.26, 86.64, 2.39, 2.60">Warwick</option>
+                       <option value="52.22, 41.73, 86.66, 2.19, 5.09">West End</option>
+                       <option value="75.78, 14.21, 77.89, 6.84, 5.26">Westbourne</option>
+                      </select>
+                <div class="chart" style=" height:10vh; width:40vw">
+                    <canvas id="land"></canvas>
+                </div>
+             </div>
+            </div>
+             <!--            Transport -->
+         <div id="chart">
+          <div id="btntransport"><hr>
+            <button id="variables" class="btn btn-outline-secondary btn-block" style="color:whitesmoke">Mobility Choices</button>
+           </div>
+            <div id="btnseltra" style="height: 45vh"> 
+                      <select class="form-control" multiple aria-label="multiple select example" id="SelectTr">
+                       <option value="50.1, 10.2, 20.5, 6" selected>Westminster borough</option>
+                       <option value="40.54, 10.65, 4.1, 0">Abbey Road</option>
+                       <option value="30.82, 5, 0, 0">Bayswater</option>
+                       <option value="50.18, 10.41, 40.48, 0">Bryanston and Borset Square</option>
+                       <option value="4, 0, 5, 0">Church Street</option>
+                       <option value="95, 10.11, 92.29, 0">Churchill</option>
+                       <option value="74.48, 10.036, 6.8, 0">Harrow Road</option>
+                       <option value="28.83, 10.03, 30.35, 10.54">Hyde Park</option>
+                       <option value="27.76, 20.18, 30.45, 20.07">Knightsbridge and Begravia</option>
+                       <option value="53.39,0, 96.65, 0">Lancaster Gate</option>
+                       <option value="75.54, 10.25, 30.14, 0">Little Venice</option>
+                       <option value="83.33, 9.2, 27.77, 0">Maida Vale</option>
+                       <option value="25.52, 8.9, 10.04, 2.9">Maylebone High Street</option>
+                       <option value="40.04, 0, 4, 0">Queen's Park</option>
+                       <option value="79.94, 10.67, 20.09, 4.1">Regent's Park</option>
+                       <option value="63.3, 10.66, 27.75, 9.4">St. James</option>
+                       <option value="66.61, 10.47, 13.23, 0.73">Tachbrook</option>
+                       <option value="65.54, 3.6, 30.27, 7.2">Vincent Square</option>
+                       <option value="58.86, 29.93, 26.60, 3.2">Warwick</option>
+                       <option value="36.67, 6.5, 6.5, 1.1">West End</option>
+                       <option value="100, 0, 11.2, 0">Westbourne</option>
+                      </select>
+
+                <div style="height:10vh; width:40vw">
+                    <canvas id="Transport" ></canvas>
+                </div>
+            </div>
+            </div>
+        <!--               Street Furniture-->
+            <div id="btnstreet"><hr>
+            <button id="variables" class="btn btn-outline-secondary btn-block" style="color:whitesmoke">Street Furniture</button>
+           </div>
+            <div id="btnselstreet" style="height: 46vh">
+                      <select class="form-control" multiple aria-label="multiple select example" id="SelectSf">
+                       <option value="93.3, 6.7, 1.4, 78.1, 20.5" selected>Westminster borough</option>
+                       <option value="93.38, 6.61, 0.82, 91.73, 7.43">Abbey Road</option>
+                       <option value="98.36, 1.63, 4.91, 88.52, 6.55">Bayswater</option>
+                       <option value="100, 2.35, 0, 89.15, 10.84">Bryanston and Borset Square</option>
+                       <option value="96.76, 0.40, 2.41, 0.40, 4.85">Church Street</option>
+                       <option value="42.45, 8.37, 42.45, 79.32, 19.55">Churchill</option>
+                       <option value="96.59, 3.40, 96.59, 3.40">Harrow Road</option>
+                       <option value="93.29, 6.70, 2.31, 77.31, 20.36">Hyde Park</option>
+                       <option value="89.06, 10.93, 0.80, 55.12, 44.07">Knightsbridge and Begravia</option>
+                       <option value="97.92, 2.07, 0, 87.96, 12.86">Lancaster Gate</option>
+                       <option value="95.59, 4.40,0, 87.42, 7.54">Little Venice</option>
+                       <option value="89.81, 40.48, 0, 95.37, 4.62">Maida Vale</option>
+                       <option value="94.64, 5.35, 1.48, 82.44, 16.07">Maylebone High Street</option>
+                       <option value="99.19, 0.80, 2.83, 95.54, 1.61">Queen's Park</option>
+                       <option value="87.02, 12.97, 3.34, 94.14, 2.51">Regent's Park</option>
+                       <option value="91.88, 8.11, 0.94, 72.55, 26.50">St. James</option>
+                       <option value="65.44, 3.67, 3.67, 47.79, 16.91">Tachbrook</option>
+                       <option value="92, 5.81, 0, 84.72, 13.09">Vincent Square</option>
+                       <option value="90.87, 1.30, 0.65, 67.10, 24.42">Warwick</option>
+                       <option value="86.54, 7.40, 2.07, 68.58, 23.29">West End</option>
+                       <option value="82.10, 7.89, 0, 82.10, 7.89">Westbourne</option>
+                      </select>
+
+                    <div style="height:10vh; width:40vw">
+                        <canvas id="StreetFurniture"></canvas>
+                    </div>
+            </div>
+        <!--               Social-->
+            <div id="btnsocial"><hr>
+            <button id="variables" class="btn btn-outline-secondary btn-block" style="color:whitesmoke">Social Environment</button>
+           </div>
+            <div id="btnselsocial" style="height: 46vh">
+                      <select class="form-control" multiple aria-label="multiple select example" id="SelectSocial">
+                      <option value="10.5, 89.5, 2.9, 97.1" selected>Westminster borough</option>
+                       <option value="14.87, 85.12, 0.41, 100">Abbey Road</option>
+                       <option value="13.11, 86.88, 0.54, 95.62">Bayswater</option>
+                       <option value="6.83, 93.16, 1.65, 98.34">Bryanston and Borset Square</option>
+                       <option value="4.45, 0.41, 0, 0.40">Church Street</option>
+                       <option value="42.45, 10, 42.45, 98.88">Churchill</option>
+                       <option value="26.53, 73.46,0, 95.91">Harrow Road</option>
+                       <option value="10.05, 89.94, 0.51, 99.48">Hyde Park</option>
+                       <option value="5.63, 94.36, 0.11, 99.88">Knightsbridge and Begravia</option>
+                       <option value="8.71, 91.28, 2.48, 97.51">Lancaster Gate</option>
+                       <option value="11.94, 88.05, 1.25, 98.74">Little Venice</option>
+                       <option value="25, 75, 2.77, 97.22">Maida Vale</option>
+                       <option value="10.26, 89.73, 0.44, 99.55">Maylebone High Street</option>
+                       <option value="9.71, 90.28, 2.02, 97.97">Queen's Park</option>
+                       <option value="12.13, 87.86, 2.92, 97.07">Regent's Park</option>
+                       <option value="10.35, 89.64, 2.38, 97.61">St. James</option>
+                       <option value="5.14, 63.97, 4.41, 64.70">Tachbrook</option>
+                       <option value="5.81, 90.90, 0.72, 97.09">Vincent Square</option>
+                       <option value="9.12, 83.06, 0.97, 91.20">Warwick</option>
+                       <option value="11.91, 82.03, 7.94, 86.01">West End</option>
+                       <option value="13.15, 76.84, 2.10, 87.89">Westbourne</option>
+                      </select>
+
+                    <div style="height:10vh; width:40vw">
+                        <canvas id="Social"></canvas>
+                    </div>
+            </div>
+        <!--              pavements -->
+            <div id="btnside"><hr>
+            <button id="variables" class="btn btn-outline-secondary btn-block" style="color:whitesmoke">Sidewalks</button>
+           </div>
+            <div id="btnselside" style="height: 45vh">
+                      <select class="form-control" multiple aria-label="multiple select example" id="SelectSide">
+                      <option value="92.5, 85.2, 17.4, 69.3, 17.7, 13, 56.8, 43.2" selected>Westminster borough</option>
+                       <option value="91.73, 91.3, 0, 70.49, 40.08, 19.42, 85.53, 14.46">Abbey Road</option>
+                       <option value="89.07, 86.33, 2.73, 67.75, 28.966, 3.27, 72.13, 27.86">Bayswater</option>
+                       <option value="87.97, 82.54, 5.42, 73.82, 22.40, 3.77, 75.75, 54.24">Bryanston and Borset Square</option>
+                       <option value="0.40, 0.40, 0.40, 96.35, 0.40, 2.83, 75.70, 0.40">Church Street</option>
+                       <option value="93.29, 72.62,16.20, 42.45, 13.96, 7.52, 42.45, 34.07">Churchill</option>
+                       <option value="98.62, 78.23, 1.36, 27.89, 61.22, 10.88, 88.42, 11.56">Harrow Road</option>
+                       <option value="81.70, 72.42, 8.24, 81.44, 11.85, 6.70, 54.39, 45.61">Hyde Park</option>
+                       <option value="89.18, 82.96, 33.25, 60.18, 9.55, 30.26, 45.22, 54.77">Knightsbridge and Begravia</option>
+                       <option value="78.00, 75.51, 2.90, 78.83, 17.42, 3.73, 67.21, 32.78">Lancaster Gate</option>
+                       <option value="93.08, 84.90, 6.71, 53.45, 33.33, 13.20, 73.69, 28.3">Little Venice</option>
+                       <option value="98.14, 92.59, 12.96, 40.74, 44.44, 71.29, 28.70">Maida Vale</option>
+                       <option value="84.22, 77.32, 8.33, 75.44, 24.55,0 ,45.98, 54.01">Maylebone High Street</option>
+                       <option value="100, 4.45, 4.04, 42.10, 46.63, 10.3, 96.35, 3.64">Queen's Park</option>
+                       <option value="96.65, 96.64, 93.30, 93.72, 6.27, 30.12, 42.25, 27.19">Regent's Park</option>
+                       <option value="97.53, 91.02, 32.22, 79.58, 6.80, 13.32, 53.22, 46.48">St. James</option>
+                       <option value="67.64, 57.35, 5.88, 37.5, 11.76, 12.5, 41.17, 27.94">Tachbrook</option>
+                       <option value="96.72, 93.3, 10.54, 70.18, 8.36, 19.27, 77.09, 20.72">Vincent Square</option>
+                       <option value="90.22, 86.94, 3.90, 70.64, 15.96, 4.54, 41.68, 50.48">Warwick</option>
+                       <option value="88.55, 79.66, 24, 76.64, 7.94, 9.36, 42.41, 50.50">West End</option>
+                       <option value="85.78, 76.31, 8.42, 46.84, 36.31, 6.84, 59.47, 30.53">Westbourne</option>
+                      </select>
+
+                    <div style="height:10vh; width:40vw">
+                        <canvas id="Pavements"></canvas>
+                    </div>
+            </div>
+        <!--               Road Environment-->
+            <div id="btnroad"><hr>
+            <button id="variables" class="btn btn-outline-secondary btn-block" style="color:whitesmoke">Road Environment</button>
+           </div>
+            <div id="btnselroad" style="height: 42vh">
+                      <select class="form-control" multiple aria-label="multiple select example" id="SelectRoad">
+                      <option value="12.6, 49.3, 38.1" selected>Westminster borough</option>
+                       <option value="11.15, 86.36, 1.65">Abbey Road</option>
+                       <option value="13.66, 67.75, 18.57">Bayswater</option>
+                       <option value="17.21, 56.13, 26.65">Bryanston and Borset Square</option>
+                       <option value="12.95, 0.40, 13.776">Church Street</option>
+                       <option value="42.45, 58.65, 31.84">Churchill</option>
+                       <option value="1.36, 95.23, 3.40">Harrow Road</option>
+                       <option value="26.28, 43.29, 30.41">Hyde Park</option>
+                       <option value="15.65, 42.80, 41.54">Knightsbridge and Begravia</option>
+                       <option value="29.04, 50.20, 20.74">Lancaster Gate</option>
+                       <option value="8.17, 76.10, 15.72">Little Venice</option>
+                       <option value="1.85, 66.66, 31.48">Maida Vale</option>
+                       <option value="19.45, 44.49, 36.01">Maylebone High Street</option>
+                       <option value="0, 95.54, 4.45">Queen's Park</option>
+                       <option value="10.46, 78.24, 11.29">Regent's Park</option>
+                       <option value="10.86, 33.23, 55.61">St. James</option>
+                       <option value="6.61, 46.32, 16.17">Tachbrook</option>
+                       <option value="7.63, 60.73, 29.45">Vincent Square</option>
+                       <option value="7.49, 66.77, 17.91">Warwick</option>
+                       <option value="8.95, 25.19, 59.81">West End</option>
+                       <option value="8.94, 58.42, 22.63">Westbourne</option>
+                      </select>
+
+                    <div style="height:10vh; width:40vw; color:whitesmoke">
+                        <canvas id="Road"></canvas>
+                    </div>
+             </div>
+        <!--                Crossings-->
+           <div id="btncro"><hr>
+            <button id="variables" class="btn btn-outline-secondary btn-block" style="color:whitesmoke">Crossings</button>
+           </div>
+            <div id="btnselcro" style="height: 42vh">
+                      <select class="form-control" multiple aria-label="multiple select example" id="SelectCr">
+                      <option value="75.3, 24.7, 4.4, 2.4, 93.2, 69.7, 30.3" selected>Westminster borough</option>
+                       <option value="44.62, 14.04, 2.89, 2.06, 53.71, 38.01, 12.39">Abbey Road</option>
+                       <option value="37.70, 10.38, 0.54, 0, 47.54, 38.51, 12.56">Bayswater</option>
+                       <option value="55.18, 15.09, 2.12, 0.47, 67.68, 45.75, 24.52">Bryanston and Borset Square</option>
+                       <option value="48.58, 0.40, 0, 0.40, 53.03, 43.31, 040">Church Street</option>
+                       <option value="42.45, 8.93, 42.45, 1.11, 47.48, 42.45, 11.73">Churchill</option>
+                       <option value="36.73, 12.95, 0, 0.68, 48.97, 32.65, 17">Harrow Road</option>
+                       <option value="35.56, 17.01, 1.80, 1.25, 49.48, 34.27, 18.29">Hyde Park</option>
+                       <option value="29.92, 9.09, 1.84, 1.49, 35.67, 29.22, 9.78">Knightsbridge and Begravia</option>
+                       <option value="34.43, 10.37, 0, 0, 44.84, 33.19, 11.61">Lancaster Gate</option>
+                       <option value="42.76, 13.20, 1.88, 1.25, 52.83, 37.73, 18.23">Little Venice</option>
+                       <option value="52.77, 18.51, 1.85, 0.92, 68.51, 38.88, 32.40">Maida Vale</option>
+                       <option value="44.004, 18.45, 3.86, 0.44, 58.18, 40.48, 22.02">Maylebone High Street</option>
+                       <option value="60.32, 0.80, 5.26, 2.02, 53.84, 43.31, 17.81">Queen's Park</option>
+                       <option value="33.47, 18.41, 0.83, 0.41, 50.62, 29.28, 22.59">Regent's Park</option>
+                       <option value="27.44, 11.80, 1.88, 0.54, 36.78, 26.93, 12.30">St. James</option>
+                       <option value="29, 14, 2, 2, 39, 38, 15">Tachbrook</option>
+                       <option value="42.90, 8.72, 1, 1.45, 49.45, 42.54, 9.09">Vincent Square</option>
+                       <option value="52.44, 16.93, 4.56, 3.25, 61.88, 51.46, 18.24">Warwick</option>
+                       <option value="33, 11, 2, 1, 40, 32, 12">West End</option>
+                       <option value="26.84, 8.42, 1.05, 2.63, 31.57, 22.63, 12.63">Westbourne</option>
+                      </select>
+
+                    <div style="height:10vh; width:40vw">
+                        <canvas id="Cross"></canvas>
+                    </div>
+            </div>
+              
+        </div>
+        <div id="mapdiv" class="col-md-12">        
+        </div>
+
+        <script>
+
+//************************** tooltip function *************************************************************************************************
+        $(document).ready(function() {
+          $('[rel="tooltip"]').tooltip({ placement: 'left'});
+        });
+            
+
+           
+            
+//*********************************************************************************************************************************************
+//************************************************************* MEAN PedEnvScore DIV ******************************************************
+            $("#PedEnvScore1").hide();
+            $("#PedEnvScore2").click(function(e){
+               $("#PedEnvScore1").toggle('slow');//or just show instead of toggle
+            });
+ /// ****************************************************************************************************************************************
+//************************************************************* MEANWalkabilityScore DIV ******************************************************
+            $("#walk1").hide();
+            $("#walk").click(function(e){
+               $("#walk1").toggle('slow');//or just show instead of toggle
+            });
+ /// *******************************************************************************************************************************************
+//************************************************************* MEANPedInfrScore DIV ******************************************************
+            $("#PedInfr1").hide();
+            $("#PedInfr").click(function(e){
+               $("#PedInfr1").toggle('slow');//or just show instead of toggle
+            });
+ /// *******************************************************************************************************************************************
+            
+            
+//            $("#walkscore1").hide();
+//            $("#walkscore").click(function(e){
+//               $("#walkscore1").toggle('slow');//or just show instead of toggle
+//            });
+//*******************************************************************************************************************************************
+//******************************************** HIDE AND SEEK*********************************************************************************
+//*******************************************************************************************************************************************
+  //***********************************For Graphs **************************************************************
+            $("#btnselect").hide();
+            $("#btnchart").click(function(e){
+               $("#btnselect").toggle('slow');//or just show instead of toggle
+            });
+            
+            $("#btnselland").hide();
+            $("#btnland").click(function(e){
+               $("#btnselland").toggle('slow');//or just show instead of toggle
+            });
+            
+            $("#btnseltra").hide();
+            $("#btntransport").click(function(e){
+               $("#btnseltra").toggle('slow');//or just show instead of toggle
+            });
+            
+            $("#btnselstreet").hide();
+            $("#btnstreet").click(function(e){
+               $("#btnselstreet").toggle('slow');//or just show instead of toggle
+            });
+            
+            $("#btnselsocial").hide();
+            $("#btnsocial").click(function(e){
+               $("#btnselsocial").toggle('slow');//or just show instead of toggle
+            });
+            
+            $("#btnselside").hide();
+            $("#btnside").click(function(e){
+               $("#btnselside").toggle('slow');//or just show instead of toggle
+            });
+            
+            $("#btnselroad").hide();
+            $("#btnroad").click(function(e){
+               $("#btnselroad").toggle('slow');//or just show instead of toggle
+            });
+            
+            $("#btnselcro").hide();
+            $("#btncro").click(function(e){
+               $("#btnselcro").toggle('slow');//or just show instead of toggle
+            });
+  //**********************************For Visualization ********************************************************          
+            $("#select").show();
+            $("#button").click(function(e){
+               $("#select").toggle('slow');//or just show instead of toggle
+            });
+            
+            $("#select1").hide();
+            $("#button1").click(function(e){
+               $("#select1").toggle('slow');//or just show instead of toggle
+            });
+            
+            $("#select3").hide();
+            $("#button3").click(function(e){
+               $("#select3").toggle('slow');//or just show instead of toggle
+            });
+            
+            $("#select4").hide();
+            $("#button4").click(function(e){
+               $("#select4").toggle('slow');//or just show instead of toggle
+            });
+            
+            $("#select6").hide();
+            $("#button6").click(function(e){
+               $("#select6").toggle('slow');//or just show instead of toggle
+            });
+            
+            $("#select9").hide();
+            $("#button9").click(function(e){
+               $("#select9").toggle('slow');//or just show instead of toggle
+            });
+            
+            $("#select14").hide();
+            $("#button14").click(function(e){
+               $("#select14").toggle('slow');//or just show instead of toggle
+            });
+            
+            $("#select15").hide();
+            $("#button15").click(function(e){
+               $("#select15").toggle('slow');//or just show instead of toggle
+            });
+//********************************************************************************************************************************************  
+            var lyrSearch;
+            var lyrSTbuff;
+            var jsnSTbuff;
+            var ctlLayers;
+            var ctlFile;
+            var ctlDraw;
+            var arHabitatIDs;
+            
+             // ****** Map Initalization ******
+                
+                var mymap = L.map('mapdiv', {center:[51.4717048,-0.4029118], zoom:10});
+                
+                var ctlSidebar = L.control.sidebar('side-bar').addTo(mymap);
+                    ctlSidebar.toggle('off');
+                var ctlSidebar1 = L.control.sidebar('sidebar', {position: 'right', hover: 'sidebar'},).addTo(mymap);
+                    ctlSidebar1.toggle('off');
+            //************* streetview ***************************************************              
+                L.streetView({position: 'bottomright', placeholder: "Streetview"}).addTo(mymap);
+                // Add a marker to the centre of the map
+                 var marker = L.marker(mymap.getCenter())
+                    // Make sure the marker stays in the centre when the map is moved
+                mymap.on('move', function() { marker.setLatLng(mymap.getCenter()); });
+            //******************************************************************************
+                var ctlEasyButton = L.easyButton('fa-bars', function(btn, map){
+                ctlSidebar.toggle();    
+                },'Walkability Visualization').addTo(mymap);
+                var ctlEasyButton1 = L.easyButton('bi bi-pie-chart', function(btn, map){
+                ctlSidebar1.toggle();
+                },'Graphs for every ward').addTo(mymap);
+            
+            
+                var home =  {
+                  lat: 51.518297, 
+                  lng: -0.167618,
+                  zoom: 13
+                }; 
+
+                L.easyButton('fa-home',function(btn,map){
+                map.setView([home.lat, home.lng], home.zoom);
+                },'Zoom To city of Westminster').addTo(mymap);
+                
+                var ctlSearch = L.Control.openCageSearch({key: '581ca6cccee84f829e7fbe4d163d73f5', limit: 5, placeholder: 'Search street', collapsed:false}).addTo(mymap);
+                
+                var ctlAttribute = L.control.attribution({position:'bottomleft'}).addTo(mymap);
+ 
+             // ******* Layer Initialization ******
+                var lyrCustom = L.tileLayer('https://api.mapbox.com/styles/v1/nkls9423/cklb5ngne2khy17sa4kdexpii/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoibmtsczk0MjMiLCJhIjoiY2trbXdxZDQ0MG5laDJwbnNxcGJ1bzdwYSJ9.Hab9S5regSied_1CWI1Y2w', {attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors,  © <a href="https://www.mapbox.com/">Mapbox</a> Imagery'} );
+                var lyrOSM = L.tileLayer.provider('OpenStreetMap.Mapnik');
+                var lyrImagery = L.tileLayer.provider('Esri.WorldImagery');
+                mymap.addLayer(lyrCustom);
+             
+            
+                var lyrMarkerCluster = L.markerClusterGroup();
+                
+                var lyrBou = L.geoJSON.ajax('data/LondonBound1.geojson', {color:'grey', weight:'1', opacity:'1', dashArray:'3'}).addTo(mymap);
+                
+            
+                var lyrborough = L.geoJSON.ajax('data/London_Bo.geojson', {color:'grey', fillOpacity:'0.1', weight:'1', opacity:'0.6', dashArray:'1'}).addTo(mymap);
+                
+                var lyrST = L.geoJSON.ajax('data/LondonST.geojson',{
+                    pointToLayer:returnST});
+                lyrST.on('data:loaded', function(){
+                    mymap.fitBounds(lyrST.getBounds());
+//                    lyrMarkerCluster.addLayer(lyrST);
+//                    lyrMarkerCluster.addTo(mymap);
+                    //jsnSTbuff = turf.buffer(lyrST.toGeoJSON(), 0.02, 'kilometers');
+                    //lyrSTbuff = L.geoJSON(jsnSTbuff, {style:{color: 'yellow', dashArray:'5,5', fillOpacity:0}}).addTo(mymap);
+                    //lyrST.bringToFront();
+                    
+                });
+                
+                var lyrlines06 = L.geoJSON.ajax('data/Tomeas06lines.geojson',{
+                    style:styleClientLinears, onEachFeature:processClientLinears
+                });
+                
+//                var lyrwalkabilityFinals = L.geoJSON.ajax('data/walkhub-data.geojson', {style:stylewalka, onEachFeature:onEachFeature}).addTo(mymap);
+            
+                
+                var lyrBlocks = L.geoJSON.ajax('data/Blocks.geojson', {style:styleblocks, onEachFeature:processblocks});
+            
+            
+//******************************************************************************************************************************************************************************
+//******************************************************************************************************************************************************************************
+//****************************************************************************************************************************************************************************** 
+/// ************************************************** SETTING UP the WFS layers **************************************************************************************************
+//******************************************************************************************************************************************************************************            
+///////////////////////////////////////////////////////////////////////
+            
+//// ************************************************************************************ london lines ****************************************************************************************
+                var owsrootUrl = 'http://localhost:8080/geoserver/city_of_westminster/ows';
+
+                var defaultParameters = {
+                    service : 'WFS',
+                    version : '1.0.0',
+                    request : 'GetFeature',
+                    typeName : 'city_of_westminster:LinesData',
+                    outputFormat : 'text/javascript',
+                    format_options : 'callback:getJson',
+                    SrsName : 'EPSG:4326',
+//                    cql_filter :'',
+
+                };
+
+                var parameters = L.Util.extend(defaultParameters);
+            
+                var URL = owsrootUrl + L.Util.getParamString(parameters);
+                
+                var lines = L.geoJson(null, {
+                  style: function (feature) {
+//                    var att = feature.properties;
+//                    switch (att.StreetName) {
+//                    case 'Outer Circle':
+//                        return {color:'peru'};
+//                        break;
+//                    default:
+//                        return {stroke: true,
+//                      fillColor: '#B04173',
+//                      fillOpacity: 0,
+//                      color: '#2d862d',
+//                      weight: 0.5}
+//                    }
+                    return {
+                      stroke: true,
+                      fillColor: '#B04173',
+                      fillOpacity: 0,
+                      color: '#2d862d',
+                      weight: 1,
+                    };
+                  },
+                  onEachFeature: function (feature, layer) {
+                      var att = feature.properties;
+                                popupOptions = {maxWidth: 250};
+                                layer.bindPopup("<b>Ward: </b>"+att.Ward_Name+"<br><b>Pedestrian Environment Score: </b>"+att.Ped_Env_Score+"<br><b>Pedestrian Infrastracture Score: </b>"+att.Ped_Infr_Score+"<br><b>Walkability: </b>"+att.Walkability_Score+"<br><b>Street Name: </b>"+att.StreetName,popupOptions);
+                   },
+//                    filter: function(json){
+//                        var att = json.properties;
+//                        if (att.S13=='1') {
+//                            return true;
+//                        } else {
+//                            return false;
+//                        }
+//                    }
+                
+                });           
+            
+                var ajax = $.ajax({
+                  url: URL,
+                  dataType: 'jsonp',
+                  jsonpCallback: 'getJson',
+                  success: function (response) {
+                    lines.addData(response);
+//                    lines.addTo(map);
+                  }
+                });
+            
+
+            
+///// ******************************************************************************************* london blocks *******************************************************************************************************
+    
+                
+//                var owsrootUrl = 'http://localhost:8080/geoserver/london/ows';
+//
+//                var defaultParameters = {
+//                    service : 'WFS',
+//                    version : '1.0.0',
+//                    request : 'GetFeature',
+//                    typeName : 'london:londonblocks',
+//                    outputFormat : 'text/javascript',
+//                    format_options : 'callback:getJson',
+//                    SrsName : 'EPSG:4326',
+//
+//
+//                };
+//
+//                var parameters = L.Util.extend(defaultParameters);
+//            
+//                var URL = owsrootUrl + L.Util.getParamString(parameters);
+//            
+//                
+//                var blocks = L.geoJson(null, {
+//                  style: function (feature) {
+//                      function getColor(d) {
+//                        return d > 0.8 ? '#800026' :
+//                               d > 0.7  ? '#BD0026' :
+//                               d > 0.6  ? '#E31A1C' :
+//                               d > 0.5  ? '#FC4E2A' :
+//                               d > 0.4  ? '#FD8D3C' :
+//                               d > 0.2   ? '#FEB24C' :
+//                               d > 0.1   ? '#FED976' :
+//                                          '#FFEDA0';
+//                        }
+//                    return {
+//                      stroke: false,
+//                      fillColor: getColor(feature.properties.MEAN_Walkability_Score),
+//                      fillOpacity: 1,
+//                      color: 'red',
+//                      weight: 1,
+//                    };
+//                  },
+//                  onEachFeature: function (feature, layer) {
+//                      var att = feature.properties;
+//                                popupOptions = {maxWidth: 250};
+//                                layer.bindPopup("<b>Ward: </b>"+att.Ward+"<bt><b>MEAN Pedestrian Infrastracture Score: </b>"+att.MEAN_Ped_Infr_Score+"<br><b>MEAN Pedestrian Environment Score: </b>"+att.MEAN_Ped_Env_Score+"<br><b>MEAN Walkability Score: </b>"+att.MEAN_Walkability_Score,popupOptions);
+//                   },
+////                   filter: filterblo,
+//                    
+//                });               
+//
+//                var ajax = $.ajax({
+//                  url: URL,
+//                  dataType: 'jsonp',
+//                  jsonpCallback: 'getJson',
+//                  success: function (response) {
+//                    blocks.addData(response);
+////                    blocks.addTo(map);
+//                  }
+//                });     
+            
+//*************************************************************************************************************************************           
+            
+                var owsrootUrl = 'http://localhost:8080/geoserver/city_of_westminster/ows';
+
+                var defaultParameters = {
+                    service : 'WFS',
+                    version : '1.0.0',
+                    request : 'GetFeature',
+                    typeName : 'city_of_westminster:walkability',
+                    outputFormat : 'text/javascript',
+                    format_options : 'callback:getJson',
+                    SrsName : 'EPSG:4326',
+
+
+                };
+
+                var para = L.Util.extend(defaultParameters);
+            
+                var URL = owsrootUrl + L.Util.getParamString(para);
+            
+                
+                var walka = L.geoJson(null, {
+                  style: function (feature) {
+                      function getColor(d){
+                        return d > 51.3 ? '#005a32':
+                            d > 44.8 ? '#238443':
+                            d > 39.2 ? '#41ab5d':
+                            d > 33.3 ? '#78c679':
+                            d > 28.1 ? '#addd8e':
+                            d > 23.3 ? '#d9f0a3':
+                            d > 16.9 ? '#f7fcb9':
+                            d > 1.3 ? '#ffffe5':
+                                      '#FFEDA0';
+                          }
+                    return {
+                      stroke: false,
+                      fillColor: getColor(feature.properties.score),
+                      fillOpacity: 1,
+                      color: 'red',
+                      weight: 1,
+                    };
+                  },
+                  onEachFeature: function (feature, layer) {
+                      var att = feature.properties;
+                                popupOptions = {maxWidth: 250};
+                                layer.bindPopup("<b>Wlkability Score: </b>"+att.score,popupOptions);
+                   },
+//                   filter: filterblo,
+                    
+                });               
+
+                var ajax = $.ajax({
+                  url: URL,
+                  dataType: 'jsonp',
+                  jsonpCallback: 'getJson',
+                  success: function (response) {
+                    walka.addData(response);
+//                    walka.addTo(map);
+                  }
+                });            
+            
+            
+                
+                $(".checkou").each(function(i, al) {
+                    al.unchecked = true; // Set new status (unchecked) first.
+                    $(al).change(); // Trigger the event.
+                  });
+
+
+                $(".checkou").change(function() {
+                  var lyClicked = $(this).attr("id");
+                  switch (lyClicked) {
+                    case "walka":
+                      toggleLayer(this.checked, walka);
+                      break; 
+                        }
+                });
+
+                function toggleLayer(checked, layer) {
+                    if (checked) {
+                    map.addLayer(layer);
+                  } else {
+                    map.removeLayer(layer);
+                  }
+                }
+            
+//***************************************************************************************************************************************************  //*************************************************lyrWESTMINSTER WARD*************************************************           
+//***************************************************************************************************************************************************              
+                
+                var url = 'data/westminsterwards.geojson';
+                var arr = [];
+                var arr1 = [];
+
+                $( "#autocomplete" ).autocomplete();
+
+                function style(feature) {
+                    return {
+                        fillColor: 'green', 
+                        fillOpacity: 0.0,  
+                        weight: 0.5,
+                        opacity: 0.6,
+                        color: '#000000',
+                        dashArray: '3',
+                        dashOpacity: 0.2,
+                    };
+                }
+                var highlight = {
+//                    'fillColor': 'yellow',
+                    'weight': 3,
+                    'opacity': 1,
+                    'color': '#ff0000',
+                    'dashArray': '0'
+                };
+
+                function forEachFeature(feature, layer) {
+                // Tagging each state poly with their name for the search control.
+                layer._leaflet_id = feature.properties.NAME;
+
+                var popupContent = "<p><b>Ward: </b>"+ feature.properties.NAME +'</p>';
+                layer.bindPopup(popupContent);    
+
+                layer.on("click", function (e) { 
+                    lyrWestwards.setStyle(style); //resets layer colors
+                    layer.setStyle(highlight);  //highlights selected.
+                    }); 
+                }    
+
+                var lyrWestwards = L.geoJSON(null, {onEachFeature: forEachFeature, style: style});
+
+                $.getJSON(url, function(data) {
+                        lyrWestwards.addData(data);
+
+                        for (i = 0; i < data.features.length; i++) {  //loads State Name into an Array for searching
+                            arr1.push({label:data.features[i].properties.NAME, value:""});
+                        }
+                       addDataToAutocomplete(arr1);  //passes array for sorting and to load search control.
+                    });
+
+                 lyrWestwards.addTo(mymap);
+
+
+                ////////// Autocomplete search
+                function addDataToAutocomplete(arr) {
+
+                    arr.sort(function(a, b){ // sort object by Name
+                        var nameA=a.label, nameB=b.label
+                        if (nameA < nameB) //sort string ascending
+                            return -1 
+                        if (nameA > nameB)
+                            return 1
+                        return 0 //default return value (no sorting)
+                    })
+
+                    // The source for autocomplete.  https://api.jqueryui.com/autocomplete/#method-option
+                    $( "#autocomplete" ).autocomplete("option", "source", arr); 
+
+                    $( "#autocomplete" ).on( "autocompleteselect", function( event, ui ) {
+                        polySelect(ui.item.label);  //grabs selected state name
+                        ui.item.value='';
+                    });
+                }	///////////// Autocomplete search end
+
+
+                // fire off click event and zoom to polygon  
+                function polySelect(a){
+                    mymap._layers[a].fire('click');  // 'clicks' on state name from search
+                    var layer = mymap._layers[a];
+                    mymap.fitBounds(layer.getBounds());  // zooms to selected poly
+                    }
+                // END...fire off click event and zoom to polygon
+
+                $(".check").each(function(i, el) {
+                    el.checked = true; // Set new status (unchecked) first.
+                    $(el).change(); // Trigger the event.
+                  });
+
+
+                $(".check").change(function() {
+                  var layerClicked = $(this).attr("id");
+                  switch (layerClicked) {
+                    case "lyrWestwards":
+                      toggleLayer(this.checked, lyrWestwards);
+                      break; 
+                        }
+                });
+
+                function toggleLayer(checked, layer) {
+                    if (checked) {
+                    mymap.addLayer(layer);
+                  } else {
+                    mymap.removeLayer(layer);
+                  }
+                }
+//**********************************************************************************************************************************************
+//**********************************************************************************************************************************************
+//**********************************************************************************************************************************************
+//**********************************************************************************************************************************************
+//********************************************************* spatial indexes ************************************************************
+//**********************************************************************************************************************************************
+//**********************************************************************************************************************************************
+                var lyrMEANPedEnvScore = L.tileLayer.wms('http://localhost:8080/geoserver/city_of_westminster/wms', {
+                    layers: 'city_of_westminster:MEANPedEnvScore',
+                    transparent: true,
+                    format:'image/png',
+                    info_format: 'application/json',
+                    opacity: 0,
+                }).addTo(mymap);
+                
+                function updateOpacityMPES(value) {
+                    lyrMEANPedEnvScore.setOpacity(value);
+                }
+ //******************** checkbox******************************************************           
+                $(".check").each(function(i, el) {
+                    el.checked = true; // Set new status (unchecked) first.
+                    $(el).change(); // Trigger the event.
+                  });
+
+
+                $(".check").change(function() {
+                  var layerClicked = $(this).attr("id");
+                  switch (layerClicked) {
+                    case "lyrMEANPedEnvScore":
+                      toggleLayer(this.checked, lyrMEANPedEnvScore);
+                      break; 
+                        }
+                });
+
+                function toggleLayer(checked, layer) {
+                    if (checked) {
+                    mymap.addLayer(layer);
+                  } else {
+                    mymap.removeLayer(layer);
+                  }
+                }
+//**********************************************************************
+                var lyrMEANPedInfrScore = L.tileLayer.wms('http://localhost:8080/geoserver/city_of_westminster/wms', {
+                    layers: 'city_of_westminster:MEANPedInfrScore',
+                    transparent: true,
+                    format:'image/png',
+                    info_format: 'application/json',
+                    opacity: 0,
+                }).addTo(mymap);
+                
+                function updateOpacityMPIS(value) {
+                    lyrMEANPedInfrScore.setOpacity(value);
+                }
+//******************** checkbox******************************************************           
+                $(".check").each(function(i, el) {
+                    el.checked = true; // Set new status (unchecked) first.
+                    $(el).change(); // Trigger the event.
+                  });
+
+
+                $(".check").change(function() {
+                  var layerClicked = $(this).attr("id");
+                  switch (layerClicked) {
+                    case "lyrMEANPedInfrScore":
+                      toggleLayer(this.checked, lyrMEANPedInfrScore);
+                      break; 
+                        }
+                });
+
+                function toggleLayer(checked, layer) {
+                    if (checked) {
+                    mymap.addLayer(layer);
+                  } else {
+                    mymap.removeLayer(layer);
+                  }
+                }
+//**********************************************************************
+                var lyrMEANWalkabilityScore = L.tileLayer.wms('http://localhost:8080/geoserver/city_of_westminster/wms', {
+                    layers: 'city_of_westminster:MEANWalkabilityScore',
+                    transparent: true,
+                    format:'image/png',
+                    info_format: 'application/json',
+                    opacity: 0,
+                }).addTo(mymap);
+
+                function updateOpacityMWS(value) {
+                    lyrMEANWalkabilityScore.setOpacity(value);
+                }
+//******************** checkbox******************************************************           
+                $(".check").each(function(i, el) {
+                    el.checked = true; // Set new status (unchecked) first.
+                    $(el).change(); // Trigger the event.
+                  });
+
+
+                $(".check").change(function() {
+                  var layerClicked = $(this).attr("id");
+                  switch (layerClicked) {
+                    case "lyrMEANWalkabilityScore":
+                      toggleLayer(this.checked, lyrMEANWalkabilityScore);
+                      break; 
+                        }
+                });
+
+                function toggleLayer(checked, layer) {
+                    if (checked) {
+                    mymap.addLayer(layer);
+                  } else {
+                    mymap.removeLayer(layer);
+                  }
+                }
+//**********************************************************************
+
+            
+    //****************************************************************************************************************************************
+    //************************************************* Functions for spatial Indexes ********************************************************
+    //****************************************************************************************************************************************            
+                function PedEnvScore(){
+                    var selectOCC = document.getElementById("occ"); // selecting the first 
+                    if (selectOCC.value == 'All'){
+                        cql_filter = "Ward is not null"
+                    }else {
+                    var cql_filter = "Ward='"+selectOCC.value+"'";
+                    }
+
+                    lyrMEANPedEnvScore.setParams({
+                        cql_filter: cql_filter,
+                    })                 
+                }
+
+                function WalkabilityScore(){
+                    var selectOCC = document.getElementById("oce"); // selecting the first 
+                    if (selectOCC.value == 'All'){
+                        cql_filter = "Ward is not null"
+                    }else {
+                    var cql_filter = "Ward='"+selectOCC.value+"'";
+                    }
+
+                    lyrMEANWalkabilityScore.setParams({
+                        cql_filter: cql_filter,
+                    })                 
+                }
+
+                function PedInfrScore(){
+                    var selectOCC = document.getElementById("ocf"); // selecting the first 
+                    if (selectOCC.value == 'All'){
+                        cql_filter = "Ward is not null"
+                    }else {
+                    var cql_filter = "Ward='"+selectOCC.value+"'";
+                    }
+
+                    lyrMEANPedInfrScore.setParams({
+                        cql_filter: cql_filter,
+                    })                 
+                }
+//****************************************************************************************************************************************                
+//****************************************************************************************************************************************
+//*****************************************************************************************************************************************                
+//********************************************************* Variable Layers ***************************************************************
+//**********************************************************************************************************************************************
+//**********************************************************************************************************************************************                
+            var lyrVarAll = L.tileLayer.wms('http://localhost:8080/geoserver/city_of_westminster/wms', {
+                layers: 'city_of_westminster:westminsterlines',
+                transparent: true,
+                format:'image/png',
+            }).addTo(mymap);
+
+            $(".check").each(function(i, el) {
+                    el.checked = true; // Set new status (unchecked) first.
+                    $(el).change(); // Trigger the event.
+                  });
+
+
+                $(".check").change(function() {
+                  var layerClicked = $(this).attr("id");
+                  switch (layerClicked) {
+                    case "lyrVarAll":
+                      toggleLayer(this.checked, lyrVarAll);
+                      break; 
+                        }
+                });
+
+                function toggleLayer(checked, layer) {
+                    if (checked) {
+                    mymap.addLayer(layer);
+                  } else {
+                    mymap.removeLayer(layer);
+                  }
+                }
+            
+
+//******************************************************** functions for variable layers *************************************************************************
+//**********************************************************************************************************************************************
+//********************************************************************************************************************************************** 
+            function S1(){
+                var ctS1 = document.getElementById("one");                
+                if (ctS1.value == 'All'){
+                    cq = "S1 is not null or S1 is null"
+                }else if (ctS1.value == 'Null'){
+                    cq = "S1 is null"
+                }else {
+                var cq = "S1='"+ctS1.value+"'";    
+                }
+
+                lyrVarAll.setParams({
+                    cql_filter: cq,
+                })
+//               alert(cq);
+             }
+            function S2(){
+                var ctS2 = document.getElementById("two");                
+                if (ctS2.value == 'All'){
+                    cq = "S2 is not null or S2 is null"
+                }else if (ctS2.value == 'Null'){
+                    cq = "S2 is null"
+                }else {
+                var cq = "S2='"+ctS2.value+"'";    
+                }
+
+                lyrVarAll.setParams({
+                    cql_filter: cq,
+                })
+//               alert(cq);
+             }
+            function S3(){
+                var ctS3 = document.getElementById("three");                
+                if (ctS3.value == 'All'){
+                    cq = "S3 is not null or S3 is null"
+                }else if (ctS3.value == 'Null'){
+                    cq = "S3 is null"
+                }else {
+                var cq = "S3='"+ctS3.value+"'";    
+                }
+
+                lyrVarAll.setParams({
+                    cql_filter: cq,
+                })
+//               alert(cq);
+             }
+            function S4(){
+                var ctS4 = document.getElementById("four");                
+                if (ctS4.value == 'All'){
+                    cq = "S4 is not null or S4 is null"
+                }else if (ctS4.value == 'Null'){
+                    cq = "S4 is null"
+                }else {
+                var cq = "S4='"+ctS4.value+"'";    
+                }
+
+                lyrVarAll.setParams({
+                    cql_filter: cq,
+                })
+//               alert(cq);
+             }
+            function S5(){
+                var ctS5 = document.getElementById("five");                
+                if (ctS5.value == 'All'){
+                    cq = "S5 is not null or S5 is null"
+                }else if (ctS5.value == 'Null'){
+                    cq = "S5 is null"
+                }else {
+                var cq = "S5='"+ctS5.value+"'";    
+                }
+
+                lyrVarAll.setParams({
+                    cql_filter: cq,
+                })
+//               alert(cq);
+             }
+            function S6(){
+                var ctS6 = document.getElementById("six");                
+                if (ctS6.value == 'All'){
+                    cq = "S6 is not null or S6 is null"
+                }else if (ctS6.value == 'Null'){
+                    cq = "S6 is null"
+                }else {
+                var cq = "S6='"+ctS6.value+"'";    
+                }
+
+                lyrVarAll.setParams({
+                    cql_filter: cq,
+                })
+//               alert(cq);
+             }
+            function S7(){
+                var ctS7 = document.getElementById("seven");                
+                if (ctS7.value == 'All'){
+                    cq = "S7 is not null or S7 is null"
+                }else if (ctS7.value == 'Null'){
+                    cq = "S7 is null"
+                }else {
+                var cq = "S7='"+ctS7.value+"'";    
+                }
+
+                lyrVarAll.setParams({
+                    cql_filter: cq,
+                })
+//               alert(cq);
+             }
+            function S8(){
+                var ctS8 = document.getElementById("eight");                
+                if (ctS8.value == 'All'){
+                    cq = "S8 is not null or S88 is null"
+                }else if (ctS8.value == 'Null'){
+                    cq = "S8 is null"
+                }else {
+                var cq = "S8='"+ctS8.value+"'";    
+                }
+
+                lyrVarAll.setParams({
+                    cql_filter: cq,
+                })
+//               alert(cq);
+             }
+            function S9(){
+                var ctS9 = document.getElementById("nine");                
+                if (ctS9.value == 'All'){
+                    cq = "S9 is not null or S9 is null"
+                }else if (ctS9.value == 'Null'){
+                    cq = "S9 is null"
+                }else {
+                var cq = "S9='"+ctS9.value+"'";    
+                }
+
+                lyrVarAll.setParams({
+                    cql_filter: cq,
+                })
+//               alert(cq);
+             }
+            function S10(){
+                var ctS10 = document.getElementById("ten");                
+                if (ctS10.value == 'All'){
+                    cq = "S10 is not null or S10 is null"
+                }else if (ctS10.value == 'Null'){
+                    cq = "S10 is null"
+                }else {
+                var cq = "S10='"+ctS10.value+"'";    
+                }
+
+                lyrVarAll.setParams({
+                    cql_filter: cq,
+                })
+//               alert(cq);
+             }
+            function S11(){
+                var ctS11 = document.getElementById("eleven");                
+                if (ctS11.value == 'All'){
+                    cq = "S11 is not null or S11 is null"
+                }else if (ctS11.value == 'Null'){
+                    cq = "S11 is null"
+                }else {
+                var cq = "S11='"+ctS11.value+"'";    
+                }
+
+                lyrVarAll.setParams({
+                    cql_filter: cq,
+                })
+//               alert(cq);
+             }
+            function S12(){
+                var ctS12 = document.getElementById("twelve");                
+                if (ctS12.value == 'All'){
+                    cq = "S12 is not null or S12 is null"
+                }else if (ctS12.value == 'Null'){
+                    cq = "S12 is null"
+                }else {
+                var cq = "S12='"+ctS12.value+"'";    
+                }
+
+                lyrVarAll.setParams({
+                    cql_filter: cq,
+                })
+//               alert(cq);
+             }
+            function S13(){
+                var ctS13 = document.getElementById("thirteen");                
+                if (ctS13.value == 'All'){
+                    cq = "S13 is not null or S13 is null"
+                }else if (ctS13.value == 'Null'){
+                    cq = "S13 is null"
+                }else {
+                var cq = "S13='"+ctS13.value+"'";    
+                }
+
+                lyrVarAll.setParams({
+                    cql_filter: cq,
+                })
+//               alert(cq);
+             }
+            function S14(){
+                var ctS14 = document.getElementById("fourteen");                
+                if (ctS14.value == 'All'){
+                    cq = "S14 is not null or S14 is null"
+                }else if (ctS14.value == 'Null'){
+                    cq = "S14 is null"
+                }else {
+                var cq = "S14='"+ctS14.value+"'";    
+                }
+
+                lyrVarAll.setParams({
+                    cql_filter: cq,
+                })
+//               alert(cq);
+             }
+            function C1_1(){
+                var ctC1_1 = document.getElementById("one_one");                
+                if (ctC1_1.value == 'All'){
+                    cq = "C1_1 is not null or C1_1 is null"
+                }else if (ctC1_1.value == 'Null'){
+                    cq = "C1_1 is null"
+                }else {
+                var cq = "C1_1='"+ctC1_1.value+"'";    
+                }
+
+                lyrVarAll.setParams({
+                    cql_filter: cq,
+                })
+//               alert(cq);
+             }
+            function C1_2(){
+                var ctC1_2 = document.getElementById("one_two");                
+                if (ctC1_2.value == 'All'){
+                    cq = "C1_2 is not null or C1_2 is null"
+                }else if (ctC1_2.value == 'Null'){
+                    cq = "C1_2 is null"
+                }else {
+                var cq = "C1_2='"+ctC1_2.value+"'";    
+                }
+
+                lyrVarAll.setParams({
+                    cql_filter: cq,
+                })
+//               alert(cq);
+             }
+            function C1_3(){
+                var ctC1_3 = document.getElementById("one_three");                
+                if (ctC1_3.value == 'All'){
+                    cq = "C1_3 is not null or C1_3 is null"
+                }else if (ctC1_3.value == 'Null'){
+                    cq = "C1_3 is null"
+                }else {
+                var cq = "C1_3='"+ctC1_3.value+"'";    
+                }
+
+                lyrVarAll.setParams({
+                    cql_filter: cq,
+                })
+//               alert(cq);
+             }    
+//**********************************************************************************************************************************************************************                
+//**************************************************************** Density layers **************************************************************************************        
+            
+            
+            var lyrS1_1 = L.imageOverlay('img/s1_1_new_0.png',[[51.48121394757288,-0.21748339866605282],[51.54377144506488,-0.10576990705103373]], {opacity:0}).addTo(mymap);
+            //******************** checkbox******************************************************           
+                $(".check").each(function(i, el) {
+                    el.unchecked = true; // Set new status (unchecked) first.
+                    $(el).change(); // Trigger the event.
+                  });
+
+
+                $(".check").change(function() {
+                  var layerClicked = $(this).attr("id");
+                  switch (layerClicked) {
+                    case "lyrS1_1":
+                      toggleLayer(this.checked, lyrS1_1);
+                      break; 
+                        }
+                });
+
+                function toggleLayer(checked, layer) {
+                    if (checked) {
+                    mymap.addLayer(layer);
+                  } else {
+                    mymap.removeLayer(layer);
+                  }
+                }
+            var lyrS2_1 = L.imageOverlay('img/S2_1_10.png',[[51.48476424900008,-0.21602758899996388],[51.53975998650008,-0.11075738549996388]], {opacity:0}).addTo(mymap);
+            $(".check").each(function(i, el) {
+                    el.unchecked = true; // Set new status (unchecked) first.
+                    $(el).change(); // Trigger the event.
+                  });
+
+
+                $(".check").change(function() {
+                  var layerClicked = $(this).attr("id");
+                  switch (layerClicked) {
+                    case "lyrS2_1":
+                      toggleLayer(this.checked, lyrS2_1);
+                      break; 
+                        }
+                });
+
+                function toggleLayer(checked, layer) {
+                    if (checked) {
+                    mymap.addLayer(layer);
+                  } else {
+                    mymap.removeLayer(layer);
+                  }
+                }
+            var lyrS3_1 = L.imageOverlay('img/S3_1_9.png',[[51.48476424900008,-0.21602758899996388],[51.53975667330008,-0.11075931429996388]], {opacity:0}).addTo(mymap);
+            $(".check").each(function(i, el) {
+                    el.unchecked = true; // Set new status (unchecked) first.
+                    $(el).change(); // Trigger the event.
+                  });
+
+
+                $(".check").change(function() {
+                  var layerClicked = $(this).attr("id");
+                  switch (layerClicked) {
+                    case "lyrS3_1":
+                      toggleLayer(this.checked, lyrS3_1);
+                      break; 
+                        }
+                });
+
+                function toggleLayer(checked, layer) {
+                    if (checked) {
+                    mymap.addLayer(layer);
+                  } else {
+                    mymap.removeLayer(layer);
+                  }
+                }
+            var lyrS4_1 = L.imageOverlay('img/S4_1_8.png',[[51.48476424900008,-0.21602758899996388],[51.53975451660008,-0.1107645451999688]], {opacity:0}).addTo(mymap);
+            $(".check").each(function(i, el) {
+                    el.unchecked = true; // Set new status (unchecked) first.
+                    $(el).change(); // Trigger the event.
+                  });
+
+
+                $(".check").change(function() {
+                  var layerClicked = $(this).attr("id");
+                  switch (layerClicked) {
+                    case "lyrS4_1":
+                      toggleLayer(this.checked, lyrS4_1);
+                      break; 
+                        }
+                });
+
+                function toggleLayer(checked, layer) {
+                    if (checked) {
+                    mymap.addLayer(layer);
+                  } else {
+                    mymap.removeLayer(layer);
+                  }
+                }
+            var lyrS5_0 = L.imageOverlay('img/S5_0_7.png',[[51.48476424900008,-0.21558078385],[51.53975827650008,-0.11076409705000002]], {opacity:0}).addTo(mymap);
+            $(".check").each(function(i, el) {
+                    el.unchecked = true; // Set new status (unchecked) first.
+                    $(el).change(); // Trigger the event.
+                  });
+
+
+                $(".check").change(function() {
+                  var layerClicked = $(this).attr("id");
+                  switch (layerClicked) {
+                    case "lyrS5_0":
+                      toggleLayer(this.checked, lyrS5_0);
+                      break; 
+                        }
+                });
+
+                function toggleLayer(checked, layer) {
+                    if (checked) {
+                    mymap.addLayer(layer);
+                  } else {
+                    mymap.removeLayer(layer);
+                  }
+                }
+            var lyrS6_0 = L.imageOverlay('img/S6_0_6.png',[[51.48476424900008,-0.21580848695],[51.53974811530008,-0.11076218945000244]], {opacity:0}).addTo(mymap);
+            $(".check").each(function(i, el) {
+                    el.unchecked = true; // Set new status (unchecked) first.
+                    $(el).change(); // Trigger the event.
+                  });
+
+
+                $(".check").change(function() {
+                  var layerClicked = $(this).attr("id");
+                  switch (layerClicked) {
+                    case "lyrS6_0":
+                      toggleLayer(this.checked, lyrS6_0);
+                      break; 
+                        }
+                });
+
+                function toggleLayer(checked, layer) {
+                    if (checked) {
+                    mymap.addLayer(layer);
+                  } else {
+                    mymap.removeLayer(layer);
+                  }
+                }
+            var lyrS7_0 = L.imageOverlay('img/S7_0_5.png',[[51.48476424900008,-0.21602758899996388],[51.53975581750008,-0.11095372499996388]], {opacity:0}).addTo(mymap);
+            $(".check").each(function(i, el) {
+                    el.unchecked = true; // Set new status (unchecked) first.
+                    $(el).change(); // Trigger the event.
+                  });
+
+
+                $(".check").change(function() {
+                  var layerClicked = $(this).attr("id");
+                  switch (layerClicked) {
+                    case "lyrS7_0":
+                      toggleLayer(this.checked, lyrS7_0);
+                      break; 
+                        }
+                });
+
+                function toggleLayer(checked, layer) {
+                    if (checked) {
+                    mymap.addLayer(layer);
+                  } else {
+                    mymap.removeLayer(layer);
+                  }
+                }
+            var lyrS8_1 = L.imageOverlay('img/S8_1_4.png',[[51.48476424900008,-0.20441370834999997],[51.53975754100008,-0.11075807625000215]], {opacity:0}).addTo(mymap);
+            $(".check").each(function(i, el) {
+                    el.unchecked = true; // Set new status (unchecked) first.
+                    $(el).change(); // Trigger the event.
+                  });
+
+
+                $(".check").change(function() {
+                  var layerClicked = $(this).attr("id");
+                  switch (layerClicked) {
+                    case "lyrS8_1":
+                      toggleLayer(this.checked, lyrS8_1);
+                      break; 
+                        }
+                });
+
+                function toggleLayer(checked, layer) {
+                    if (checked) {
+                    mymap.addLayer(layer);
+                  } else {
+                    mymap.removeLayer(layer);
+                  }
+                }
+            var lyrS9_0 = L.imageOverlay('img/S9_1_3.png',[[51.48476424900008,-0.20411026965],[51.53975054120008,-0.11532683435000207]], {opacity:0}).addTo(mymap);
+            $(".check").each(function(i, el) {
+                    el.unchecked = true; // Set new status (unchecked) first.
+                    $(el).change(); // Trigger the event.
+                  });
+
+
+                $(".check").change(function() {
+                  var layerClicked = $(this).attr("id");
+                  switch (layerClicked) {
+                    case "lyrS9_0":
+                      toggleLayer(this.checked, lyrS9_0);
+                      break; 
+                        }
+                });
+
+                function toggleLayer(checked, layer) {
+                    if (checked) {
+                    mymap.addLayer(layer);
+                  } else {
+                    mymap.removeLayer(layer);
+                  }
+                }
+            var lyrS10_1 = L.imageOverlay('img/S10_1_2.png',[[51.48476424900008,-0.21592305485],[51.53975153850008,-0.11075456285000408]], {opacity:0}).addTo(mymap);
+            $(".check").each(function(i, el) {
+                    el.unchecked = true; // Set new status (unchecked) first.
+                    $(el).change(); // Trigger the event.
+                  });
+
+
+                $(".check").change(function() {
+                  var layerClicked = $(this).attr("id");
+                  switch (layerClicked) {
+                    case "lyrS10_1":
+                      toggleLayer(this.checked, lyrS10_1);
+                      break; 
+                        }
+                });
+
+                function toggleLayer(checked, layer) {
+                    if (checked) {
+                    mymap.addLayer(layer);
+                  } else {
+                    mymap.removeLayer(layer);
+                  }
+                }
+            var lyrS12_1 = L.imageOverlay('img/S12_1_1.png',[[51.48476424900008,-0.21602758899996388],[51.53975624540008,-0.11076013339996717]], {opacity:0}).addTo(mymap);
+            $(".check").each(function(i, el) {
+                    el.unchecked = true; // Set new status (unchecked) first.
+                    $(el).change(); // Trigger the event.
+                  });
+
+
+                $(".check").change(function() {
+                  var layerClicked = $(this).attr("id");
+                  switch (layerClicked) {
+                    case "lyrS12_1":
+                      toggleLayer(this.checked, lyrS12_1);
+                      break; 
+                        }
+                });
+
+                function toggleLayer(checked, layer) {
+                    if (checked) {
+                    mymap.addLayer(layer);
+                  } else {
+                    mymap.removeLayer(layer);
+                  }
+                }
+            var lyrS13_1 = L.imageOverlay('img/S13_1_0.png',[[51.48476424900008,-0.21602758899996388],[51.53975966860008,-0.1107535805999688]], {opacity:0}).addTo(mymap);
+            $(".check").each(function(i, el) {
+                    el.unchecked = true; // Set new status (unchecked) first.
+                    $(el).change(); // Trigger the event.
+                  });
+
+
+                $(".check").change(function() {
+                  var layerClicked = $(this).attr("id");
+                  switch (layerClicked) {
+                    case "lyrS13_1":
+                      toggleLayer(this.checked, lyrS13_1);
+                      break; 
+                        }
+                });
+
+                function toggleLayer(checked, layer) {
+                    if (checked) {
+                    mymap.addLayer(layer);
+                  } else {
+                    mymap.removeLayer(layer);
+                  }
+                }
+            var lyrpedisnotnull = L.imageOverlay('img/pedisnotnull_12.png',[[51.48476424900008,-0.2063118484],[51.53975112100008,-0.1107528872]], {opacity:0}).addTo(mymap);
+            $(".check").each(function(i, el) {
+                    el.unchecked = true; // Set new status (unchecked) first.
+                    $(el).change(); // Trigger the event.
+                  });
+
+
+                $(".check").change(function() {
+                  var layerClicked = $(this).attr("id");
+                  switch (layerClicked) {
+                    case "lyrpedisnotnull":
+                      toggleLayer(this.checked, lyrpedisnotnull);
+                      break; 
+                        }
+                });
+
+                function toggleLayer(checked, layer) {
+                    if (checked) {
+                    mymap.addLayer(layer);
+                  } else {
+                    mymap.removeLayer(layer);
+                  }
+                }
+            var lyrC1_1_1 = L.imageOverlay('img/C1_1_1_2.png',[[51.47940001891557,-0.21572252857795013],[51.5448584718309,-0.10531439598106937]], {opacity:0}).addTo(mymap);
+            $(".check").each(function(i, el) {
+                    el.unchecked = true; // Set new status (unchecked) first.
+                    $(el).change(); // Trigger the event.
+                  });
+
+
+                $(".check").change(function() {
+                  var layerClicked = $(this).attr("id");
+                  switch (layerClicked) {
+                    case "lyrC1_1_1":
+                      toggleLayer(this.checked, lyrC1_1_1);
+                      break; 
+                        }
+                });
+
+                function toggleLayer(checked, layer) {
+                    if (checked) {
+                    mymap.addLayer(layer);
+                  } else {
+                    mymap.removeLayer(layer);
+                  }
+                }
+            var lyrC1_2_1 = L.imageOverlay('img/C1_2_1_3.png',[[51.47922496523607,-0.21773355949663598],[51.54502731872008,-0.10531692162073064]], {opacity:0}).addTo(mymap);
+            $(".check").each(function(i, el) {
+                    el.unchecked = true; // Set new status (unchecked) first.
+                    $(el).change(); // Trigger the event.
+                  });
+
+
+                $(".check").change(function() {
+                  var layerClicked = $(this).attr("id");
+                  switch (layerClicked) {
+                    case "lyrC1_2_1":
+                      toggleLayer(this.checked, lyrC1_2_1);
+                      break; 
+                        }
+                });
+
+                function toggleLayer(checked, layer) {
+                    if (checked) {
+                    mymap.addLayer(layer);
+                  } else {
+                    mymap.removeLayer(layer);
+                  }
+                }
+            var lyrC1_3_1 = L.imageOverlay('img/C1_3_1_1.png',[[51.479234301500306,-0.21769538017618778],[51.54485843976474,-0.1053143647072892]], {opacity:0}).addTo(mymap);
+            $(".check").each(function(i, el) {
+                    el.unchecked = true; // Set new status (unchecked) first.
+                    $(el).change(); // Trigger the event.
+                  });
+
+
+                $(".check").change(function() {
+                  var layerClicked = $(this).attr("id");
+                  switch (layerClicked) {
+                    case "lyrC1_3_1":
+                      toggleLayer(this.checked, lyrC1_3_1);
+                      break; 
+                        }
+                });
+
+                function toggleLayer(checked, layer) {
+                    if (checked) {
+                    mymap.addLayer(layer);
+                  } else {
+                    mymap.removeLayer(layer);
+                  }
+                }
+  
+            
+            
+//************************************************************************ opacity **********************************************************************************
+            $("#sldS1_1").on('change', function(){
+                $("#image-opacity").html(this.value);
+                lyrS1_1.setOpacity(this.value);
+            })
+			$("#sldS2_1").on('change', function(){
+                $("#image-opacity").html(this.value);
+                lyrS2_1.setOpacity(this.value);
+            })
+			$("#sldS3_1").on('change', function(){
+                $("#image-opacity").html(this.value);
+                lyrS3_1.setOpacity(this.value);
+            })
+			$("#sldS4_1").on('change', function(){
+                $("#image-opacity").html(this.value);
+                lyrS4_1.setOpacity(this.value);
+            })
+			$("#sldS5_0").on('change', function(){
+                $("#image-opacity").html(this.value);
+                lyrS5_0.setOpacity(this.value);
+            })
+			$("#sldS6_0").on('change', function(){
+                $("#image-opacity").html(this.value);
+                lyrS6_0.setOpacity(this.value);
+            })
+			$("#sldS7_0").on('change', function(){
+                $("#image-opacity").html(this.value);
+                lyrS7_0.setOpacity(this.value);
+            })
+			$("#sldS8_1").on('change', function(){
+                $("#image-opacity").html(this.value);
+                lyrS8_1.setOpacity(this.value);
+            })
+			$("#sldS9_0").on('change', function(){
+                $("#image-opacity").html(this.value);
+                lyrS9_0.setOpacity(this.value);
+            })
+			$("#sldS10_1").on('change', function(){
+                $("#image-opacity").html(this.value);
+                lyrS10_1.setOpacity(this.value);
+            })
+			$("#sldS12_1").on('change', function(){
+                $("#image-opacity").html(this.value);
+                lyrS12_1.setOpacity(this.value);
+            })
+			$("#sldS13_1").on('change', function(){
+                $("#image-opacity").html(this.value);
+                lyrS13_1.setOpacity(this.value);
+            })
+			$("#sldpedisnotnull").on('change', function(){
+                $("#image-opacity").html(this.value);
+                lyrpedisnotnull.setOpacity(this.value);
+            })
+            $("#sldC1_1_1").on('change', function(){
+                $("#image-opacity").html(this.value);
+                lyrC1_1_1.setOpacity(this.value);
+            })
+            $("#sldC1_2_1").on('change', function(){
+                $("#image-opacity").html(this.value);
+                lyrC1_2_1.setOpacity(this.value);
+            })
+            $("#sldC1_3_1").on('change', function(){
+                $("#image-opacity").html(this.value);
+                lyrC1_3_1.setOpacity(this.value);
+            }) 
+//*******************************************************************************************************************************************
+//************************************Walkability layer****************************************************************************
+//*******************************************************************************************************************************************   
+            
+            // ***** Setup Layer Control *****
+//                "<span style='color: gray'>Grayscale</span>"
+                var Basemaps = {
+                    "Open Street Maps": lyrOSM,
+                    "Imagery":lyrImagery,
+                    "Custom map": lyrCustom,
+                };
+                
+                            
+                var groupedOverlays = {
+                    "<span style='color: gray'>Location Finder</span>":{
+                        "MapStreetView":marker,
+                    },
+                    "<span style='color: gray'>WFS layers":{
+                        "London lines": lines,
+//                        "London blocks": blocks,
+
+                    },
+                    "<span style='color: gray'>Administrative Boundaries":{
+                        "London": lyrborough,
+                        "City of Westminster":lyrBou,
+                        "Wards":lyrWestwards,
+                    },
+                    "<span style='color: gray'>Variables Maps":{
+                        "Variables": lyrVarAll,
+//                        "Number of park/square accesses": lyrS2,
+//                        "Number of Stops/Mass Transit Stations": lyrS3,
+//                        "Public seated spots (e.g. benches etc.)": lyrS4,
+//                        "Public lightning": lyrS5,
+//                        "Level of maintenance of buildings": lyrS6,
+//                        "Vandalism of buildings faces with graffiti": lyrS7,
+//                        "Bicycle lane": lyrS8,
+//                        "Existence of pavement": lyrS9,
+//                        "Level pavement maintenance": lyrS10,
+//                        "Pavement dividers": lyrS11,
+//                        "Shading level/pavement cover": lyrS12,
+//                        "Pavement width": lyrS13,
+//                        "Car lanes": lyrS14,
+                    },
+                    "<span style='color: gray'>Assessment Maps":{
+                        "MEANPedEnvScore": lyrMEANPedEnvScore,
+                        "MEANPedInfrScore": lyrMEANPedInfrScore,
+                        "MEANWalkabilityScore": lyrMEANWalkabilityScore,                        
+                    },
+                    "<span style='color: gray'>Walkability Score":{
+                        "Walkability": walka,                       
+                    },
+                    
+//                    "<span style='color: gray'>Walkability Score":{
+//                        "Walkabiility Score": lyrwalkabilityFinals,                       
+//                    },
+//                    "<span style='color: gray'>Drawn Items</span>":{
+//                        "Drawn Items":DrawnItems,
+//                    },
+//                    "Other layers":{
+//                        "Lines":lyrlines06,
+//                    "London Bus Stops":lyrST,
+//                    "Blocks":lyrBlocks,
+//                    },
+                
+                };
+                
+                var op = {
+                    
+                    exclusiveGroups: ["WFS layers", "Variables", "Other layers"],
+                    
+                    groupCheckboxes: false
+                };
+                
+                var con = L.control.groupedLayers(Basemaps, groupedOverlays, op, {collapsed: false}).addTo(mymap);
+                
+                            
+
+                
+//                var ctlMeasure = L.control.polylineMeasure({position: 'bottomright'}).addTo(mymap);
+               
+                
+                var ctlScale = L.control.scale({position:'bottomleft'}).addTo(mymap); // FOR SURE in WEBGIS
+//                var ctlMouseposition = L.control.mousePosition({position: 'bottomright'}).addTo(mymap); // FOR SURE in WEBGIS
+                              
+//**************************************************************************************************************************************************               
+//***************************************************************** Initialize Filelayer control ***************************************************
+
+                var ctlFile = L.Control.fileLayerLoad({position:'topright',
+                    // Allows you to use a customized version of L.geoJson.
+                    // For example if you are using the Proj4Leaflet leaflet plugin,
+                    // you can pass L.Proj.geoJson and load the files into the
+                    // L.Proj.GeoJson instead of the L.geoJson.
+                    layer: L.geoJson,
+                    // See http://leafletjs.com/reference.html#geojson-options
+                    layerOptions: {pointToLayer: function(feature, latlng) {return L.circleMarker(latlng, {radius:7}); }},
+                    // Add to map after loading (default: true) ?
+                    addToMap: true,
+                    // File size limit in kb (default: 1024) ?
+                    fileSizeLimit: 8059,
+                    // Restrict accepted file formats (default: .geojson, .kml, and .gpx) ?
+                    formats: [
+                        '.geojson',
+                        '.kml',
+                        '.gpx'
+                    ]
+                }).addTo(mymap);
+
+                ctlFile.loader.on('data:loaded', function (e) {
+                    // Set a random color for the layer and add to the overlay control
+                    e.layer.setStyle({color:returnRandomColor(), fillColor:returnRandomColor()});
+                    con.addBasemaps(e.layer, e.filename);
+                    refreshSelectionLayers();
+                });
+            
+                function returnRandomColor() {
+                arColors = ['red', 'darkred', 'orange', 'yellow', 'green', 'darkgreen', 'chartreuse', 'blue', 'darkblue', 'cyan', 'indigo', 'violet', 'black', 'gray']
+                var idx = Math.floor(Math.random()*14);
+                return arColors[idx];
+                }
+//*****************************************************************************************************************************************************
+            // ************ function for locate **************
+
+
+            function returnST(json, latlng){
+                var att = json.properties;
+                var wgtST = 3;
+                var ocST = 1;
+                return L.circle(latlng, {radius:1.5, color:'darkgreen', weight:wgtST, opacity:ocST, fillColor:'lightgreen'}).bindTooltip("<h6>Bus Stop:"+att.stop_name+"</h6>");
+            }
+            
+            
+            // ******* Linear data functions **********
+            
+            function styleClientLinears(json){
+                var att = json.properties;
+                switch (att.S1) {
+                    case 0:
+                        return {color:'peru'};
+                        break;
+                    case 1:
+                        return {color:'navy'};
+                        break;
+                }
+            }
+            
+            function processClientLinears(json, lyr){
+                var att = json.properties;
+                lyr.bindTooltip("<h6>Street Name:"+att.StreetName);
+            }
+            
+            
+            // ******* Blocks function ************
+            
+            function styleblocks(json){
+                var att = json.properties;
+                switch (att.TomeasKatagrafis){
+                    case 6:
+                        return {color:'grey', fillColor:'darkgreen', fillOpacity:'0.5'};
+                         break;
+                }
+            }
+            
+            function processblocks(json, lyr){
+                var att = json.properties;
+                lyr.bindTooltip("<h6>Block Number:"+att.BlocksCODE);
+            }
+//  //************************************************************************************************************************************ 
+//            
+//            function getColor(d){
+//                return d > 51.3 ? '#7a0177':
+//                    d > 44.8 ? '#c51b8a':
+//                    d > 39.2 ? '#f768a1':
+//                    d > 33.3 ? '#fa9fb5':
+//                    d > 28.1 ? '#fcc5c0':
+//                    d > 23.3 ? '#feebe2':
+//                    d > 16.9 ? '#feebe2':
+//                               '#FFEDA0';
+//            }
+//            
+//            function stylewalka(feauture){
+//                return{
+//                    fillColor: getColor(feauture.properties.Score),
+//                    weight: 2,
+//                    opacity: 0.5,
+//                    color: '',
+//                    dashArray: '',
+//                    fillOpacity: 0.9
+//                };
+//                
+//            }
+//            
+//            function highlightFeature(e) {
+//                var layer = e.target;
+//
+//                layer.setStyle({
+//                    weight: 5,
+//                    color: '#666',
+//                    dashArray: '',
+//                    fillOpacity: 0.7
+//                });
+//
+//                if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+//                    layer.bringToFront();
+//                }
+//            }    
+//                
+//            function resetHighlight(e) {
+//                lyrwalkabilityFinals.resetStyle(e.target);
+//            }
+//            
+//           
+//            
+//            function onEachFeature(feature, layer) {
+//                layer.on({
+//                    mouseover: highlightFeature,
+//                    mouseout: resetHighlight,
+//                });
+//            }
+//            
+////            var info = L.control();
+////
+////            info.onAdd = function (mymap) {
+////                this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+////                this.update();
+////                return this._div;
+////            };
+////
+////            // method that we will use to update the control based on feature properties passed
+////            info.update = function (props) {
+////                this._div.innerHTML = '<h4>Walkability Score</h4>' +  (props ?
+////                    '<b>' + props.Score + '</b> 50 m<sup>2</sup>'
+////                    : 'Hover over a pixel');
+////            };
+////
+////            info.addTo(mymap);
+////            
+////            function highlightFeature(e) {
+////                var layer = e.target;
+////
+////                layer.setStyle({
+////                    weight: 5,
+////                    color: '#666',
+////                    dashArray: '',
+////                    fillOpacity: 0.7
+////                });
+////
+////                if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+////                    layer.bringToFront();
+////                }
+////                info.update(layer.feature.properties);
+////            }
+////
+////            function resetHighlight(e) {
+////                lyrwalkabilityFinals.resetStyle(e.target);
+////                info.update();
+////            }
+            
+            //************** div canvas ******************
+        //***************************************************************** Land **********************************************
+            var ctx = document.getElementById('land').getContext('2d');
+            var myRadarChart = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'radar',
+
+                // The data for our dataset
+                data: {
+                    labels: [['Land Use:','Main Residence/No Use/','Industry/Small business'], ['Land Use:','Mainly Active Uses/','Activities'], 'Park/Square accesses: No', ['Park/Square accesses:','Only one access'], ['Park/Square accesses:','Two or more accesses']],
+                    datasets: [{
+                        label: 'Westminster borough',
+                        data:[74.1, 25.9, 90.3, 2.1, 7.6],
+                        backgroundColor: 'rgba(237, 237, 237, 0.5)', 
+                        borderColor: 'rgb(0, 77, 128)',
+
+                        borderWidth: 1,
+                    }]
+                },
+                // Configuration options go here
+                options: {
+                    legend: {
+                        labels: {
+                            fontColor: "white",
+                            fontSize: 16
+                        }
+                    },
+                    scale: {
+                        angleLines: {
+                            display: false
+                        },
+                        ticks: {
+                            suggestedMin: 0,
+                            suggestedMax: 100,
+                            stepSize: 20,
+                            fontColor: "grey",
+                            backdropColor:"#474747"
+                        },
+                        pointLabels:{
+                           fontColor:"white",
+                        },
+                    },
+                    layout:{
+                       padding: {
+                            left: 0,
+                            right: 350,
+                            top: 0,
+                            bottom: 0
+                       } 
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                // This more specific font property overrides the global property
+                                font: {
+                                    color: "white",
+                                    size: 9
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+           
+            var wards = document.getElementById('SelectB');
+            wards.addEventListener('change',wardselector);
+            function wardselector(){
+                var label = SelectB.options[SelectB.selectedIndex].text;
+                myRadarChart.data.datasets[0].label = label;
+                myRadarChart.data.datasets[0].data = SelectB.value.split(',');
+                myRadarChart.update();
+                
+            }
+           //***************************************************************** Transport********************************************** 
+            var ctx = document.getElementById('Transport').getContext('2d');
+            var ChartTr = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'radar',
+
+                // The data for our dataset
+                data: {
+                    labels: ['Transit Stops: 1', 'Transit Stops: 2+', ['Bicycle lane:', 'Without divider'], ['Bicycle lane:' ,'Seperatied from traffic']],
+                    datasets: [{
+                        label: 'Westminster borough',
+                        data:[50.1, 10.2, 20.5, 6],
+                        backgroundColor: 'rgba(237, 237, 237, 0.5)',
+                        borderColor: 'rgb(0, 77, 128)',
+                        borderWidth: 1,
+                    }]
+                },
+                // Configuration options go here
+                options: {
+                    legend: {
+                        labels: {
+                            fontColor: "white",
+                            fontSize: 16
+                        }
+                    },
+                    scale: {
+                        angleLines: {
+                            display: false
+                        },
+                        ticks: {
+                            suggestedMin: 0,
+                            suggestedMax: 100,
+                            stepSize: 20,
+                            fontColor: "grey",
+                            backdropColor:"#474747"
+                        },
+                        pointLabels:{
+                           fontColor:"white",
+                        },
+                    },
+                    layout:{
+                       padding: {
+                            left: 0,
+                            right: 350,
+                            top: 0,
+                            bottom: 0
+                       } 
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                // This more specific font property overrides the global property
+                                font: {
+                                    color: "white",
+                                    size: 9
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+           
+            var wards = document.getElementById('SelectTr');
+            wards.addEventListener('change',wardtran);
+            function wardtran(){
+                var label = SelectTr.options[SelectTr.selectedIndex].text;
+                ChartTr.data.datasets[0].label = label;
+                ChartTr.data.datasets[0].data = SelectTr.value.split(',');
+                ChartTr.update();
+                
+            }
+            //***************************************************************** StreetFurniture **********************************************
+            var ctx = document.getElementById('StreetFurniture').getContext('2d');
+            var ChartSf = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'radar',
+
+                // The data for our dataset
+                data: {
+                    labels: [['Public Seating:', 'No'], ['Public Seating:', 'Yes'], ['Street Lights:', 'None'], ['Street Lights:', 'Some'], ['Street Lights:', 'Plenty']],
+                    datasets: [{
+                        label: 'Westminster borough',
+                        data:[93.3, 6.7, 1.4, 78.1, 20.5],                        
+                        backgroundColor: 'rgba(237, 237, 237, 0.5)', 
+                        borderColor: 'rgb(0, 77, 128)',
+                        borderWidth: 1,
+                    }]
+                },
+                // Configuration options go here
+                options: {
+                    legend: {
+                        labels: {
+                            fontColor: "white",
+                            fontSize: 16
+                        }
+                    },
+                    scale: {
+                        angleLines: {
+                            display: false
+                        },
+                        ticks: {
+                            suggestedMin: 0,
+                            suggestedMax: 100,
+                            stepSize: 20,
+                            fontColor: "grey",
+                            backdropColor:"#474747"
+                        },
+                        pointLabels:{
+                           fontColor:"white",
+                        },
+                    },
+                    layout:{
+                       padding: {
+                            left: 0,
+                            right: 350,
+                            top: 0,
+                            bottom: 0
+                       } 
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                // This more specific font property overrides the global property
+                                font: {
+                                    color: "white",
+                                    size: 9
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+           
+            var wards = document.getElementById('SelectSf');
+            wards.addEventListener('change',wardstf);
+            function wardstf(){
+                var label = SelectSf.options[SelectSf.selectedIndex].text;
+                ChartSf.data.datasets[0].label = label;
+                ChartSf.data.datasets[0].data = SelectSf.value.split(',');
+                ChartSf.update();
+                
+            }
+            //***************************************************************** Social **********************************************
+            var ctx = document.getElementById('Social').getContext('2d');
+            var ChartSo = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'radar',
+
+                // The data for our dataset
+                data: {
+                    labels: [['Buildings Well-','maintained: No'], ['Buildings Well-','maintained: Yes'], 'Graffiti: Yes', 'Graffiti: No'],
+                    datasets: [{
+                        label: 'Westminster borough',
+                        data:[10.5, 89.5, 2.9, 97.1],
+                        backgroundColor: 'rgba(237, 237, 237, 0.5)', 
+                        borderColor: 'rgb(0, 77, 128)',
+                        borderWidth: 1,
+                    }]
+                },
+                // Configuration options go here
+                options: {
+                    legend: {
+                        labels: {
+                            fontColor: "white",
+                            fontSize: 16
+                        }
+                    },
+                    scale: {
+                        angleLines: {
+                            display: false
+                        },
+                        ticks: {
+                            suggestedMin: 0,
+                            suggestedMax: 100,
+                            stepSize: 20,
+                            fontColor: "grey",
+                            backdropColor:"#474747"
+                        },
+                        pointLabels:{
+                           fontColor:"white",
+                        },
+                    },
+                    layout:{
+                       padding: {
+                            left: 0,
+                            right: 350,
+                            top: 0,
+                            bottom: 0
+                       } 
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                // This more specific font property overrides the global property
+                                font: {
+                                    color: "white",
+                                    size: 9
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+           
+            var wards = document.getElementById('SelectSocial');
+            wards.addEventListener('change',wardso);
+            function wardso(){
+                var label = SelectSocial.options[SelectSocial.selectedIndex].text;
+                ChartSo.data.datasets[0].label = label;
+                ChartSo.data.datasets[0].data = SelectSocial.value.split(',');
+                ChartSo.update();
+                
+            }
+            //***************************************************************** Pavements **********************************************
+            var ctx = document.getElementById('Pavements').getContext('2d');
+            var ChartSi = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'radar',
+
+                // The data for our dataset
+                data: {
+                    labels: ['Sidewalk:Yes', ['Maintained', 'sidewalk'], ['Sidewalk', 'seperation'], ['No Cover or', 'No Sidewalk'], ['Sidewalk Shading','26-75%'], ['Sidewalk Shading','76-100%'], ['Normal width or', 'small/without sidewalk'], 'Wide sidewalk'],
+                    datasets: [{
+                        label: 'Westminster borough',
+                        data:[92.5, 85.2, 17.4, 69.3, 17.7, 13, 56.8, 43.2],
+                        backgroundColor: 'rgba(237, 237, 237, 0.5)', 
+                        borderColor: 'rgb(0, 77, 128)',
+                        borderWidth: 1,
+                    }]
+                },
+                // Configuration options go here
+                options: {
+                    legend: {
+                        labels: {
+                            fontColor: "white",
+                            fontSize: 16
+                        }
+                    },
+                    scale: {
+                        angleLines: {
+                            display: false
+                        },
+                        ticks: {
+                            suggestedMin: 0,
+                            suggestedMax: 100,
+                            stepSize: 20,
+                            fontColor: "grey",
+                            backdropColor:"#474747"
+                        },
+                        pointLabels:{
+                           fontColor:"white",
+                        },
+                    },
+                    layout:{
+                       padding: {
+                            left: 0,
+                            right: 350,
+                            top: 0,
+                            bottom: 0
+                       } 
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                // This more specific font property overrides the global property
+                                font: {
+                                    color: "white",
+                                    size: 9
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+           
+            var wards = document.getElementById('SelectSide');
+            wards.addEventListener('change',wardsi);
+            function wardsi(){
+                var label = SelectSide.options[SelectSide.selectedIndex].text;
+                ChartSi.data.datasets[0].label = label;
+                ChartSi.data.datasets[0].data = SelectSide.value.split(',');
+                ChartSi.update();
+                
+            }
+            //***************************************************************** RoadEnvironment **********************************************
+            var ctx = document.getElementById('Road').getContext('2d');
+            var ChartRo = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'radar',
+
+                // The data for our dataset
+                data: {
+                    labels: [['More than', 'four lanes'], ['Two to ','three lanes'], ['One lane or','pedestrian area']],
+                    datasets: [{
+                        label: 'Westminster borough',
+                        data:[12.6, 49.3, 38.1],
+                        backgroundColor: 'rgba(237, 237, 237, 0.5)', 
+                        borderColor: 'rgb(0, 77, 128)',
+                        borderWidth: 1,
+                    }]
+                },
+                // Configuration options go here
+                options: {
+                    legend: {
+                        labels: {
+                            fontColor: "white",
+                            fontSize: 16
+                        }
+                    },
+                    scale: {
+                        angleLines: {
+                            display: false
+                        },
+                        ticks: {
+                            suggestedMin: 0,
+                            suggestedMax: 100,
+                            stepSize: 20,
+                            fontColor: "grey",
+                            backdropColor:"#474747"
+                        },
+                        pointLabels:{
+                           fontColor:"white",
+                        },
+                    },
+                    layout:{
+                       padding: {
+                            left: 0,
+                            right: 350,
+                            top: 0,
+                            bottom: 0
+                       } 
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                // This more specific font property overrides the global property
+                                font: {
+                                    color: "white",
+                                    size: 9
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+           
+            var wards = document.getElementById('SelectRoad');
+            wards.addEventListener('change',wardro);
+            function wardro(){
+                var label = SelectRoad.options[SelectRoad.selectedIndex].text;
+                ChartRo.data.datasets[0].label = label;
+                ChartRo.data.datasets[0].data = SelectRoad.value.split(',');
+                ChartRo.update();
+                
+            }
+            //***************************************************************** Crossings **********************************************
+            var ctx = document.getElementById('Cross').getContext('2d');
+            var ChartCro = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'radar',
+
+                // The data for our dataset
+                data: {
+                    labels: [['Pedestrian walk', 'signal: No'], ['Pedestrian walk', 'signal: Yes'], ['No curb ramps', 'available'], 'One curb only', ['Both pre- and post-', 'crossing curbs'], ['Pedestrian', 'crosswalk: No'], ['Pedestrian', 'crosswalk: Yes']],
+                    datasets: [{
+                        label: 'Westminster borough',
+                        data:[75.3, 24.7, 4.4, 2.4, 93.2, 69.7, 30.3],
+                        backgroundColor: 'rgba(237, 237, 237, 0.5)', 
+                        borderColor: 'rgb(0, 77, 128)',
+                        borderWidth: 1,
+                    }]
+                },
+                // Configuration options go here
+                options: {
+                    legend: {
+                        labels: {
+                            fontColor: "white",
+                            fontSize: 16
+                        }
+                    },
+                    scale: {
+                        angleLines: {
+                            display: false
+                        },
+                        ticks: {
+                            suggestedMin: 0,
+                            suggestedMax: 100,
+                            stepSize: 20,
+                            fontColor: "grey",
+                            backdropColor:"#474747"
+                        },
+                        pointLabels:{
+                           fontColor:"white",
+                        },
+                    },
+                    layout:{
+                       padding: {
+                            left: 0,
+                            right: 350,
+                            top: 0,
+                            bottom: 0
+                       } 
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                // This more specific font property overrides the global property
+                                font: {
+                                    color: "white",
+                                    size: 9
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+           
+            var wards = document.getElementById('SelectCr');
+            wards.addEventListener('change',wardcro);
+            function wardcro(){
+                var label = SelectCr.options[SelectCr.selectedIndex].text;
+                ChartCro.data.datasets[0].label = label;
+                ChartCro.data.datasets[0].data = SelectCr.value.split(',');
+                ChartCro.update();
+                
+            }
+            
+            
+            
+            
+//            ///*********************************************************************************Test
+//            var ctx = document.getElementById('ChartLand').getContext('2d');
+//            var myRadarTest = new Chart(ctx, {
+//                // The type of chart we want to create
+//                type: 'radar',
+//
+//                // The data for our dataset
+//                data: {
+//                    labels: [['Transit','Stops: No'], 'Transit Stops: 1', 'S2=0', 'S2=1', ['Land Use:','Main Residence/No Use/','Industry/Small business']],
+//                    datasets: [{
+//                        label: 'Category: Land',
+//                        backgroundColor: 'rgb(255, 99, 132)',
+//                        borderColor: 'rgb(255, 99, 132)',
+//                        data: [74.1, 25.9, 90.3, 2.1, 7.6]
+//                    }]
+//                },
+//
+//                // Configuration options go here
+//                options: {
+//                    scale: {
+//                        angleLines: {
+//                            display: false
+//                        },
+//                        ticks: {
+//                            suggestedMin: 0,
+//                            suggestedMax: 100,
+//                            stepSize: 20,
+//                            backdropColor: "beige"
+//                        }
+//                    },
+//                    layout:{
+//                       padding: {
+//                            left: 0,
+//                            right: 350,
+//                            top: 0,
+//                            bottom: 0
+//                       } 
+//                    },
+//                    plugins: {
+//                        legend: {
+//                            labels: {
+//                                // This more specific font property overrides the global property
+//                                font: {
+//                                    size: 9
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            });
+//            
+//            var wards = document.getElementById('Test');
+//            wards.addEventListener('change',wardtest);
+//            function wardtest(){
+//                var label = Test.options[Test.selectedIndex].text;
+//                myRadarTest.data.datasets[0].label = label;
+//                myRadarTest.data.datasets[0].data = Test.value.split(',');
+//                myRadarTest.update();
+//                
+//            }
+            
+        </script>
+    </body>
+</html>

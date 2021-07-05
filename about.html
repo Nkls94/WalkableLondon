@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Walkable London - FAQ</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<style>
+    body{
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #7cafb1
+    }
+    *{
+        box-sizing: border-box;
+    }
+    /* The navbar */
+    .topnav {
+      overflow: hidden;
+      background-color: #333;
+
+    }
+
+    /* Navbar links */
+    .topnav a {
+      float: left;
+      display: block;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    .activ {
+      background-color: #125177;
+      color: white;
+    }    
+    
+    
+    .topnav-right{
+        float: right;
+    }
+    .topnav a:hover{
+       background-color: #555;
+       color: white; 
+    }
+    .main {   
+      -ms-flex: 70%; /* IE10 */
+      flex: 70%;
+
+      padding: 20px;
+    }
+    
+    .accordion {
+      background-color: #5f9ea0;
+      color: #e1eded;
+      cursor: pointer;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 16px;
+      transition: 0.4s;
+    }
+    
+    h2 {
+        color: white;
+    }
+    .active, .accordion:hover {
+      background-color: #6da6a8;
+    }
+
+    .accordion:after {
+      content: '\002B';
+      color: #777;
+      font-weight: bold;
+      float: right;
+      margin-left: 5px;
+    }
+
+    .active:after {
+      content: "\2212";
+    }
+    a:link{
+        text-decoration: none;
+    }
+    
+    a:visited{
+        text-decoration: none;
+    }
+    accordion a:hover{
+        text-decoration: none;
+    }
+    .panel-body {
+      padding: 0 16px;
+      background-color: #6da6a8;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
+    div.image{
+        overflow: hidden;
+        padding: 5px;
+        width: 100%;
+        height: 95%;
+        content:url(img/webgis_general.png);
+    }
+    
+    div.image3{
+        overflow: hidden;
+        width: 100%;
+        content:url(img/1-s2.0-S2352340921003322-gr1_lrg.jpg);
+    }
+    div.image1{
+        float: left;
+        overflow: hidden;
+        width: 50%;
+        content:url(img/maps-min.png);
+    }
+    div.image2{
+        float: left;
+        overflow: hidden;
+        width: 50%;
+        height: 437px;
+        content:url(img/spatial%20index.png);
+    }
+    div.image4{
+        margin-left: auto;
+      margin-right: auto;
+      display: block;
+        overflow: hidden;
+        width: 50%;
+        height: 437px;
+        content:url(img/graphs.png);
+    }
+    
+    .column {
+      float: left;
+      width: 50%;
+      padding: 5px;
+      height: 500px;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+</style>
+<body>
+        <div class="topnav" >
+          <a class="activ" href="./home.html">Walkable London</a>
+        
+          <div class="topnav-right"> 
+              <a href="./home.html"><i class="fa fa-home fa-fw" aria-hidden="true" rel="tooltip" title="Home" id='example'></i>&nbsp; Home</a> 
+              <a href="./index.html"><i class="fa fa-globe" aria-hidden="true" rel="tooltip" title="WebGIS" id='example'></i>&nbsp; WebGIS</a>
+              <a href="./about.html"><i class="fa fa-question-circle" aria-hidden="true" rel="tooltip" title="FAQ " id='example'></i>&nbsp; FAQ</a>
+<!--              <a href="#"><i class="fa fa-info" aria-hidden="true" rel="tooltip" title="Info " id='example'></i>&nbsp; Info</a>&nbsp;&nbsp;&nbsp;-->
+          </div>
+        </div>
+
+
+
+   <div id="About" class="main" style="width:1100px; margin:0 auto;">
+
+    <h2><b>FAQ</b></h2>
+    <br>
+    
+<!--
+    <h4>Designed and developed by <a href="https://www.linkedin.com/in/nickstasinos1294/">Nick Stasinos</a></h4>
+
+    <p>This is a thesis approach for a WebGIS. It is based on the creation of an web Geographical Information System, for the analysis and visualization of primary data related to walking. This means collecting and managing the data, the architecture of the application that hosts the data, and creating spatial analysis templates. The purpose of the application is to present spatial analysis of walking data, in the City of London. <br>
+    
+    The analysis, is carried out in each sector of the study area. The conclusion aims to outline the way pedestrian movement occurs within the City of London.</p>
+-->
+
+   <button class="accordion">What is this website about?</button>
+    <div class="panel-body">
+      <p>This is a master degree thesis approach for a full-stack WebGIS platform. It is based on the creation of a web Geographical Information System, for the analysis and visualization of primary data related to walking. That means collecting and managing the data, the architecture of the application that hosts the data, and creating spatial analysis templates. The analysis, and visualization, as well as the graphs, are carried out in each ward of the study area.The main purpose of the application is to present, spatial analysis of walking data and the decision making of city sustainability in the area of London. </p>
+    </div>
+<br>
+    <button class="accordion">Who is the person behind this?</button>
+    <div class="panel-body">
+      <p>Designed and developed by <a href="https://www.linkedin.com/in/nickstasinos1294/">Nick Stasinos</a>. He is a Geographer with Msc in Geoinformatics.</p>
+    </div>
+<br>
+    <button class="accordion">What about the data?</button>
+    <div class="panel-body">
+      <h5><b>The concept..</b></h5>
+      <p>Although there is a significant policy interest for healthier, more sustainable, inclusive, and resilient transportation systems, there is a significant data scarcity in comparable and street-level walkability indicators. The lack of relevant indicators across Europe and places with heterogeneous characteristics constitutes an important barrier in the generalizability of walkability research findings. On this basis and to our knowledge for the first time, our dataset enables micro-level walkability assessments and comparisons among a diverse group of European downtown neighbourhoods and cities. Furthermore, it can assists urban areas facing significant pressures on their mobility systems to plan more appropriate strategies and deliver more walking-friendly and sustainable environments by benefitting from such a data-driven frameworks.</p>
+      <h5><b>Target Groups</b></h5>
+      <p>Decision makers, stakeholders and urban policy analysts from the following sectors can significantly benefit from the provided datasets: researchers, urban and transport planners, public health practitioners, decision makers and city council, NGOs, think tanks, journalists.</p>
+      <h5><b>Usage</b></h5>
+      <p>The entire geospatial dataset can additionally be utilized by local planners in order to identify the walkability patterns and accordingly to propose cost-effective and more realistic solutions and strategies.
+      These data can greatly support cohesion policies targeting inclusive, healthy, and sustainable urban development for London area by detecting significant disparities in their pedestrian environments.</p>
+    </div>
+ <br>   
+    <button class="accordion">Data mining?</button>
+    <div class="panel-body">
+      <p>In this study, is used a brief and validated street observation tool to assessed 17 micro-level walkability indicators for London downtown district. In order to conduct the street audits, is utilised the free online geospatial service of Google Street View (GSV). The collected block-by-block street ratings were mapped in a vector dataset (polylines) and stored in a postgres database. Finally, segment-level GIS vector files were processed and analysed to formulate the walkability indicators <i>(see Data Variable Question)</i>.</p>
+    </div>
+ <br>   
+    <button class="accordion">Data format?</button>
+    <div class="panel-body">
+     <p><b>Spreadsheet:</b> Processed/aggregated data tables in .xls format</p>
+      <p>In the Microsoft Excel Workbook (.xlsx), the worksheet presents some information, about the case study area. The audited area size, the total number of audited street snd crossing-segments. The idea, was to calculate the statistics for every ward and observer the difference that are presented, between the study area in general.</p>
+      <p><b>Geospatial:</b> Processed/aggregated geospatial data in WFS and WMS formats, as introduced in in OGC.</p>
+      <p>All geospatial data are presented in this platform. This data include both the micro-level walkability indicators and the boundary polygons of each analyzed ward in study area. The raster data that are included in this research, are the result of applied Kernel desity method in ArcMap (ArcGIS v.10.4, ESRI). The input dataset included the raw GIS vector data, created during the street observation phase of this study. The output raster has a resolution of 50x50 m. The idea of the visualization was to present the walkability indicators, in vector format in each category in specific ward, as well as, the Kernel raster for every unique value of its variable. Exept from that the shown spatial indexes are presented in the platform. In that way the use has the ability to visualize the data, and understand the whole concept of the walkability.</p>
+    </div>
+ <br>   
+    <button class="accordion">Is there any parameter in data gathering?</button>
+    <div class="panel-body">
+      <p>For the implemetation of the dataset, is used a boundary of the most popular borough in the London area. That is why the choice was the city of Westminister. While, several of London's best-known attractions appear in this borough. This includes attractions such as Buckingham Palace in St. James's District, the Palace of Westminster which houses the British Parliament, in the same area. Throughout the city of Westminster, a large number of outdoor spaces/parks appear. Some of them are Green Park in St. James's, Hyde Park and Kensington Gardens, located in Knightsbridge and Belgravia, Regent's Park, which contains ZSL London Zoo and Queen Mary's Rose Gardens in Regent's Park. Finally, there is St. Jame's Park, located in St. James's, next to Buckingham Palace. </p>
+    </div>
+ <br>   
+    <button class="accordion">Data description?</button>
+    <div class="panel-body">
+      <p>Street-level data were collected between April and June 2020. This is a short version of the Microscale Audit of Pedestrian Streetscapes (MAPS-mini). This method of audit tool, is both a validated tool as well as commonly used in walkability studies. Furthermore, it is a brief but robust tool and thus suitable for massive data collection. The audit list included seventeen items related to micro-level characteristics of neighbourhood design, such as sidewalks, crosswalks, lights, curb cuts, street furniture, parks, transit, aesthetics. Each block-by-block recorded street observation was separately pertained to both sides of each street and crossing segment in the district. The application of the audit tool was conducted online, using the GSV service. </p>
+    </div>
+ <br>   
+    <button class="accordion">Data Variables?</button>
+    <div class="panel-body">
+     <p>The user has access in 14 street-segment level indicators and 3 crossing-segment level indicators.</p>
+      <div class="image3"></div>
+      <p><i>Image source: <a href="https://www.sciencedirect.com/science/article/pii/S2352340921003322">Alexandros Bartzokas-Tsiompras et. al. (2021) Microscale walkability indicators for fifty-nine European central urban areas: An open-access tabular dataset and a geospatial web-based platform</a></i></p>
+    </div>
+ <br>   
+    <button class="accordion">How you collected the data?</button>
+    <div class="panel-body">
+     <p><b>Main concept</b></p>
+      <p>Basically the data collection adjusted on the main micro-level walkability audit tool methodology. That means, that the observer has to rate each street  through a virtual environment, is provided from the Google Street View. After that proccess, the observer has to aggregate the data indicators. The final step is to export the walkability score.</p>
+      <p><b>List of the variables and the description</b></p>
+        <p>You can find the list of the variables and the description <a href="./variables.htm">here</a>, and the rates per category, in the study area <a href="./variables_per_category.htm">here</a>. Please consider that the first table is in greek (Upcoming english version).</p>
+    </div>
+  <br>  
+    <button class="accordion">How you calculated the Assessment Maps and the Walkability Score? </button>
+    <div class="panel-body">
+     <p><b>Mean Walkability Score</b></p>
+      <p>MeanWalkabilityscore = (S1+S2+ S3+S4+ S5+S6+ S7+S8+ S9+S10+ S11+S12+ S13+S14+C1_1+ C1_2+ C1_3)/24</p>
+      <p><b>Mean Pedestrian Environment Score</b></p>
+      <p>MeanPedEnvScore =  (S1+S2+ S3+S6+ S7+S8+ S11+S12+S14)/14</p>
+      <p><b>Mean Pedestrian Infrastructure Score</b></p>
+      <p>MeanPedInfrScore = (S5+C1_1+ C1_2+ C1_3)/12</p>
+      <br>
+      <p><b>Walkability Score</b></p>
+      <p>The walkability attractiveness values per each cell in the map describe the density of segments weighted by a microscale walkability score (WS). These scores were calculated in the raw GIS files per each polyline feature by applying the following formula:
+
+      WS=SUM(S1_1+S2_1+S2_2+S3_1+S3_2+S4_1+S5_1+S5_2+S6_1+S7_1+S8_1+S8_2+S9_1+S10_1+S11_1+S12_1+S12_2+S13_1+S14_1+S14_2+C11_1+C12_1+C12_2+C13_1)/31</p>
+
+      <p>Where WS is the microscale walkability score, S#_# and C##_# are the codes of each individual rated item, and 31 is the maximum number of points that a segment can collect (note: each segment can take 0, 1, or 2 points per audit item).</p>
+    </div>
+  <br>  
+    <button class="accordion">User Guide</button>
+    <div class="panel-body">
+     <h5><b>General View</b></h5>
+         <div class="image"></div>
+       <div class="row">
+        <div class="column">
+     <h5><b>Walkability Visualization</b></h5>
+         <div class="image1"></div><div class="image2"></div>
+        </div>
+        <div class="split right">
+     <h5><b>Compare Graphs</b></h5>
+         <div class="column" >
+                <div class="image4"></div>
+         </div>
+        </div>
+       </div>
+    </div>
+    <br>
+    <h5>Contact <a href="http://geospatial.ntua.gr">Geochoros</a> Laboratory, and Lead Researcher Alexandros Bartzokas-Tsiompras for further information and the data accesibility. We would appreciate your support! </h5>
+    </div>
+   
+    
+</body>
+<script>
+  var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.maxHeight) {
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        }
+      });
+    }  
+</script>
+</html>
