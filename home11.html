@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <title>Web-Home</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.3.0/mapbox-gl.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="src/leaflet.css">
+    <link rel="stylesheet" href="src/plugins/jquery-ui.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script src="src/leaflet-src.js"></script>
+    <script src="src/jquery-3.5.1.min.js"></script>
+    <script src="src/plugins/leaflet-providers.js"></script>
+    <script src="src/plugins/leaflet.ajax.min.js"></script>
+    <script src="src/plugins/jquery-ui.min.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.3.0/mapbox-gl.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+</head>
+<style>
+    * {
+          -moz-box-sizing: border-box;
+               box-sizing: border-box;
+          margin: 0;
+        }
+    body{
+        height: 100%;
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #9dafb0;
+    }
+    /* The navbar */
+    .topnav {
+      overflow: hidden;
+      background-color: #333;
+      position: sticky;
+      top: 0;
+    }
+    .bg-img {
+      /* The image used */
+      background-image: url("img/london_mapbox1.PNG");
+      background-color: azure;
+
+      min-height: 1000px;
+
+      /* Center and scale the image nicely */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+
+      /* Needed to position the navbar */
+      position: relative;
+    }
+
+    /* Position the navbar container inside the image */
+    
+
+    
+
+    /* Navbar links */
+    .topnav a {
+      float: left;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    .topnav a.hover {
+/*      background-color: #ddd;*/
+      color: black;
+    }
+    
+    .topnav a.active {
+      background-color: #125177;
+      color: white;
+    }    
+    .container {
+       margin:0 auto; /* this will center the page */
+       width:1500px; /*  use your width here */
+        background-color: #9dafb0;
+    }
+    
+    .topnav-center{
+        float: right;
+        text-align: center;
+    }
+    
+    .bottom{
+        width: 100%;
+        position: absolute;
+          bottom: 10px;
+          margin: center;
+        text-align: center;
+        color: #f2f2f2;
+    }
+
+    .row { 
+      padding: 40px;
+      display: -ms-flexbox; /* IE10 */
+      display: flex;
+      -ms-flex-wrap: wrap; /* IE10 */
+      flex-wrap: wrap;
+    }
+    .side {
+      -ms-flex: 30%; /* IE10 */
+      flex: 30%;
+/*      background-color: #f1f1f1;*/
+      padding: 40px;
+        width: 40%;
+    }
+    h1 {
+       font-size: 2em;
+       font-weight: bold;
+       margin-top: -0.4em;
+    }
+    h2 {
+       font-size: 2em;
+       font-weight: bold;
+       margin-top: -0.4em;
+    }
+    h3 {
+       font-size: 2em;
+       font-weight: bold;
+       margin-top: -0.4em;
+    }
+    h5 {
+      font-weight: bold;
+    }
+    /* Main column */
+    .main {   
+      -ms-flex: 70%; /* IE10 */
+      flex: 70%;
+      background-color: white;
+      padding: 20px;
+    }
+    
+    .span:hover{
+        background-color: aqua;
+    }
+    
+   a:link{
+        text-decoration: none;
+    }
+    
+    a:visited{
+        text-decoration: none;
+    }
+    .one{
+        text-align: right;
+    }
+/*
+    .footer {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      padding: 0.5px 10px;
+      height: 60px;
+      background-color: #C0C0C0;
+      color: white;
+      text-align: center;
+    }
+*/
+    .footer {
+      flex: 10%;
+/*      border-top: 10px solid #D3D3D3;*/
+      padding: 10px;
+      text-align: center;
+/*      background: #ddd;*/
+
+    }
+/*
+    .fakeimg {
+      background-color: #aaa;
+      width: 100%;
+      padding: 20px;
+    }
+    @media screen and (max-width: 700px) {
+      .row {   
+        flex-direction: column;
+      }
+    }
+
+     Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other 
+    @media screen and (max-width: 400px) {
+      .navbar a {
+        float: none;
+        width: 100%;
+      }
+    }
+*/
+    
+    #map { padding: 260px; top: 0; bottom: 0;  width: 45%; margin: 10; box-shadow: -0.5px 0.5px 5px 3px #C8C8C8;}
+       
+</style>
+
+<body>
+
+    <div class="bg-img">
+        <div class="topnav" >
+          <a class="active" href="./home.html">London Walkability</a>
+          <div class="topnav-center"> 
+          <a href="./home.html"><i class="fa fa-home fa-fw" aria-hidden="true" rel="tooltip" title="Home" id='example'></i>&nbsp; Home</a> 
+          <a href="./index.html"><i class="fa fa-globe" aria-hidden="true" rel="tooltip" title="WebGIS" id='example'></i>&nbsp; WebGIS</a>
+          <a href="./about.html"><i class="fa fa-question-circle" aria-hidden="true" rel="tooltip" title="FAQ " id='example'></i>&nbsp; About</a>
+          <a href="#"><i class="fa fa-info" aria-hidden="true" rel="tooltip" title="Info " id='example'></i>&nbsp; Info</a>&nbsp;&nbsp;&nbsp;
+          </div>
+        </div>
+      <div class="bottom">
+          <h2>London Walkability</h2>
+      </div>
+    </div>
+   
+    <hr>
+  <div class='container'>      
+    <div class="row">
+        <div class="side" class="span6 pull-left">
+            <h2>Welcome</h2>
+            <h5>This is a thesis approach for a webGIS application.</h5>
+            <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
+            <h3>More Text</h3>
+            <p>It is recommended, before using the webgis, to a have a look in the About tab-section.</p>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="./index.html"><i class="fa fa-globe" aria-hidden="true" rel="tooltip" title="WebGIS" id='example'></i>&nbsp; WebGIS</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <a href="./about.html" id="one"><i class="fa fa-question-circle fa-lg" aria-hidden="true" rel="tooltip" title="FAQ " id='example'></i>&nbsp; About</a>
+        </div>&nbsp;&nbsp;&nbsp;&nbsp;
+        <div id='map' class="span6 pull-right"></div>
+    </div>
+    <hr>
+  </div>
+    
+    <div class="footer">
+      <h2>Contact Info</h2>
+        <a href="#"><span class="fa-stack fa-lg">
+          <i class="fa fa-square-o fa-stack-2x"></i>
+          <i class="fa fa-linkedin-square fa-stack-1x" ></i>
+        </span></a>&nbsp;&nbsp;
+        <a href="#"><span class="fa-stack fa-lg">
+          <i class="fa fa-square-o fa-stack-2x"></i>
+          <i class="fa fa-youtube-square fa-stack-1x"></i>
+        </span></a>&nbsp;&nbsp;
+        <a href="#" class=""><span class="fa-stack fa-lg">
+          <i class="fa fa-square-o fa-stack-2x"></i>
+          <i class="fa fa-github fa-stack-1x"></i>
+        </span></a>
+    </div>
+  
+</body>
+<script>
+            
+
+            var map = L.map('map',{
+//                center: [51.509865, -0.118092],
+                zoom: 12
+                });
+            L.control.scale().addTo(map);
+//https://api.mapbox.com/styles/v1/nkls9423/cklb5ngne2khy17sa4kdexpii/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoibmtsczk0MjMiLCJhIjoiY2trbXdxZDQ0MG5laDJwbnNxcGJ1bzdwYSJ9.Hab9S5regSied_1CWI1Y2w
+//https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
+            var lyrOSM = L.tileLayer('https://api.mapbox.com/styles/v1/nkls9423/cklry8ip90yo217n4wdtr171o/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoibmtsczk0MjMiLCJhIjoiY2trbXdxZDQ0MG5laDJwbnNxcGJ1bzdwYSJ9.Hab9S5regSied_1CWI1Y2w', {
+                maxZoom: 16,
+                minZoom: 11,
+                attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors,  © <a href="https://www.mapbox.com/">Mapbox</a> Imagery'})
+            lyrOSM.addTo(map);
+
+                var lyrBo;
+            var lyrBou;
+                lyrBou = L.geoJSON.ajax('data/LondonBorough.geojson',{
+                    lineToLayer:returnBou, color:'grey', weight:1, dashArray: '6, 6', dashOffset: '0'}).addTo(map);    
+                lyrBo = L.geoJSON.ajax('data/LondonBound1.geojson');
+                lyrBo.on('data:loaded', function(){
+                    map.fitBounds(lyrBo.getBounds());
+                });
+            function returnBou(json, latlng){
+                var att = json.properties;
+                var wgtBou = 10;
+                return L.polyine(latlng, {color:'red', weight:wgtBou}).addTo(map);
+            }    
+            
+</script>
+</html>

@@ -1,0 +1,130 @@
+<html>
+  <head>
+        <link rel="stylesheet" href="src/leaflet.css">
+        <link rel="stylesheet" href="src/css/bootstrap.css">
+        <link rel="stylesheet" href="src/plugins/L.Control.Pan.css">
+        <link rel="stylesheet" href="src/plugins/L.Control.Zoomslider.css">
+        <link rel="stylesheet" href="src/plugins/L.Control.MousePosition.css">
+        <link rel="stylesheet" href="src/plugins/Leaflet.PolylineMeasure.css">
+        <link rel="stylesheet" href="src/plugins/easy-button.css">
+        <link rel="stylesheet" href="src/plugins/L.Control.Sidebar.css">
+        <link rel="stylesheet" href="src/plugins/leaflet-opencage/src/css/L.Control.OpenCageSearch.css">
+        <link rel="stylesheet" href="src/plugins/MarkerCluster.Default.css">
+        <link rel="stylesheet" href="src/plugins/MarkerCluster.css">
+        <link rel="stylesheet" href="src/jquery-ui.min.css">
+
+
+        <script src="src/leaflet-src.js"></script>
+        <script src="src/jquery-3.5.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <script src="src/plugins/L.Control.Pan.js"></script>
+        <script src="src/plugins/L.Control.Zoomslider.js"></script>
+        <script src="src/plugins/L.Control.MousePosition.js"></script>
+        <script src="src/plugins/Leaflet.PolylineMeasure.js"></script>
+        <script src="src/plugins/easy-button.js"></script>
+        <script src="src/plugins/L.Control.Sidebar.js"></script>
+        <script src="src/plugins/leaflet-opencage/src/js/L.Control.OpenCageSearch.js"></script>
+        <script src="src/plugins/leaflet-providers.js"></script>
+        <script src="src/plugins/leaflet.ajax.min.js"></script>
+        <script src="src/plugins/leaflet.markercluster.js"></script>
+        <script src="src/plugins/leaflet.geometryutil.js"></script>
+        <script src='https://api.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script>
+        <script src="src/jquery-ui.min.js"></script>
+    <style>
+      #map {
+        width: 100%;
+        height: 500px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+  </body>
+</html>
+
+<script>
+var map = L.map('map').setView([0, 0], 6);
+var osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution:
+    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+    
+    
+//Geoserver Web Feature Service
+//$.ajax('http://localhost:8080/geoserver/topp/ows',{
+//  type: 'GET',
+//  data: {
+//    service: 'WFS',
+//    version: '1.0.0',
+//    request: 'GetFeature',
+//    typename: 'topp:tasmania_state_boundaries',
+//    srsname: 'EPSG:4326',
+//    outputFormat: 'application/json',
+//    },
+//  dataType: 'jsonp',
+//  jsonpCallback:'callback:handleJson',
+//  jsonp:'format_options'
+// });
+//
+//// the ajax callback function
+//function handleJson(data) {
+//    selectedArea = L.geoJson(data).addTo(map);
+//  map.fitBounds(selectedArea.getBounds());
+//}
+    
+//*************************************************************************    
+//var rootUrl = 'http://localhost:8080/geoserver/topp/ows';
+//
+//var defaultParameters = {
+//    service: 'WFS',
+//    version: '1.0.0',
+//    request: 'GetFeature',
+//    typeName: 'topp:tasmania_state_boundaries',
+//    maxFeatures: 50,
+//    outputFormat: 'application/json',
+//    format_options: 'callback: getJson',
+//    srsName:'EPSG:4326'
+//
+//};
+//
+//var parameters = L.Util.extend(defaultParameters);
+//console.log(rootUrl + L.Util.getParamString(parameters));
+//    
+//    $.ajax({
+//        jsonp : false,
+//        url: rootUrl + L.Util.getParamString(parameters),
+//        dataType: 'jsonp',
+//        jsonpCallback: 'getJson',
+//        success: handleJson
+//
+//    });
+//
+//
+//var group = new L.featureGroup().addTo(map);
+//var geojsonlayer;
+//function handleJson(data) {
+//    geojsonlayer=L.geoJson(data, {
+//        style: function(feature) {
+//                return {color: '#e75025'};
+//        }
+//    }).addTo(map);
+//    m.fitBounds(group.getBounds());
+//}
+
+    // *****************************************************************************************
+    
+var mystyle = {
+    "color": "red",
+    "weight": 5,
+    "opacity": 0.65
+};
+
+var lyrlines06 = new L.geoJSON.ajax('data/Tomeas06lines.geojson',{style:mystyle, onEachFeature:process}).addTo(map);
+                                                                  
+                                                                  
+            function process(json, lyr){
+                var att = json.properties;
+                lyr.bindTooltip("<h6>Block Number:"+att.S1);
+                
+            }    
+</script>

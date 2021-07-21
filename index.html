@@ -298,6 +298,7 @@
 		   
 		   	   <div id="divProject" class="col-xs-12" >
                <div class="text-center col-xs-12"><b>Ward Finder:</b>
+                <input id="autocomplete" class="form-control" type="text" placeholder="Search for: Ward">
                </div>
                <br>
                </div>	   
@@ -664,7 +665,10 @@
           <div id="WalkFinal">
              <button id="WalkabilityFinalScore" class="btn btn-outline-light btn-block">Walkability</button>
           </div>
-           <div id="WalkFinalSele"><br> <i>Utilization rate calulcated as a walkability score, for the whole study area. The variables that are participate in this score are all of them (For more, please refer to <a href="./about.html">FAQ</a>, calculated assessment question)</i><br><br>
+           <div id="WalkFinalSele"><br> <i>Utilization rate calulcated as a walkability score, for the whole study area. The variables that are participate in this score are all of them (For more, please refer to <a href="./about.html">FAQ</a>, calculated assessment question)</i><br>
+            
+                <h6><b>Value ratings:</b></h6>
+              <img src='http://localhost:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=10&HEIGHT=10&STRICT=false&style=Walka&legend_options=fontName:Arial;fontAntiAliasing:true;fontColor:0xffffff;fontSize:6;bgColor:0x474747;dpi:200'><br><br>
             <input type="checkbox" id="walka" class="checkou" unchecked> On/Off the Walkability Score &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <input type="checkbox" id="lyrWestwards" class="check" unchecked> On/Off the wards 
            </div>
@@ -947,6 +951,12 @@
             $("#PedInfr").click(function(e){
                $("#PedInfr1").toggle('slow');//or just show instead of toggle
             });
+            
+            
+            $("#WalkFinalSele").show();
+            $("#WalkFinal").click(function(e){
+               $("#WalkFinalSele").toggle('slow');//or just show instead of toggle
+            });
  /// *******************************************************************************************************************************************
             
             
@@ -1137,8 +1147,6 @@
                     outputFormat : 'text/javascript',
                     format_options : 'callback:getJson',
                     SrsName : 'EPSG:4326',
-//                    cql_filter :'',
-
                 };
 
                 var parameters = L.Util.extend(defaultParameters);
@@ -1172,14 +1180,6 @@
                                 popupOptions = {maxWidth: 250};
                                 layer.bindPopup("<b>Ward: </b>"+att.Ward_Name+"<br><b>Pedestrian Environment Score: </b>"+att.Ped_Env_Score+"<br><b>Pedestrian Infrastracture Score: </b>"+att.Ped_Infr_Score+"<br><b>Walkability: </b>"+att.Walkability_Score+"<br><b>Street Name: </b>"+att.StreetName,popupOptions);
                    },
-//                    filter: function(json){
-//                        var att = json.properties;
-//                        if (att.S13=='1') {
-//                            return true;
-//                        } else {
-//                            return false;
-//                        }
-//                    }
                 
                 });           
             
@@ -2358,8 +2358,6 @@
                     },
                     "<span style='color: gray'>WFS layers":{
                         "London lines": lines,
-//                        "London blocks": blocks,
-
                     },
                     "<span style='color: gray'>Administrative Boundaries":{
                         "London": lyrborough,
@@ -2368,19 +2366,6 @@
                     },
                     "<span style='color: gray'>Variables Maps":{
                         "Variables": lyrVarAll,
-//                        "Number of park/square accesses": lyrS2,
-//                        "Number of Stops/Mass Transit Stations": lyrS3,
-//                        "Public seated spots (e.g. benches etc.)": lyrS4,
-//                        "Public lightning": lyrS5,
-//                        "Level of maintenance of buildings": lyrS6,
-//                        "Vandalism of buildings faces with graffiti": lyrS7,
-//                        "Bicycle lane": lyrS8,
-//                        "Existence of pavement": lyrS9,
-//                        "Level pavement maintenance": lyrS10,
-//                        "Pavement dividers": lyrS11,
-//                        "Shading level/pavement cover": lyrS12,
-//                        "Pavement width": lyrS13,
-//                        "Car lanes": lyrS14,
                     },
                     "<span style='color: gray'>Assessment Maps":{
                         "MEANPedEnvScore": lyrMEANPedEnvScore,
@@ -2390,19 +2375,6 @@
                     "<span style='color: gray'>Walkability Score":{
                         "Walkability": walka,                       
                     },
-                    
-//                    "<span style='color: gray'>Walkability Score":{
-//                        "Walkabiility Score": lyrwalkabilityFinals,                       
-//                    },
-//                    "<span style='color: gray'>Drawn Items</span>":{
-//                        "Drawn Items":DrawnItems,
-//                    },
-//                    "Other layers":{
-//                        "Lines":lyrlines06,
-//                    "London Bus Stops":lyrST,
-//                    "Blocks":lyrBlocks,
-//                    },
-                
                 };
                 
                 var op = {
@@ -2602,7 +2574,6 @@
             var myRadarChart = new Chart(ctx, {
                 // The type of chart we want to create
                 type: 'radar',
-
                 // The data for our dataset
                 data: {
                     labels: [['Land Use:','Main Residence/No Use/','Industry/Small business'], ['Land Use:','Mainly Active Uses/','Activities'], 'Park/Square accesses: No', ['Park/Square accesses:','Only one access'], ['Park/Square accesses:','Two or more accesses']],
